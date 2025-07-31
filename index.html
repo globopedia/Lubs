@@ -87,13 +87,13 @@
   <script>
     const clubesURL = "https://globopedia.github.io/Rivales-Huracan/clubes.csv";
 const partidosURL = "https://globopedia.github.io/Rivales-Huracan/Encuentros_Huracan.csv";
-    let clubes = [];
-    let Encuentros_Huracan = [];
+let clubes = [];
+let Encuentros_Huracan = [];
 
-    Promise.all([
-      fetch(clubesURL).then(r => r.text()),
-      fetch(Encuentros_HuracanURL).then(r => r.text())
-    ]).then(([csvClubes, csvEncuentros_Huracan]) => {
+Promise.all([
+  fetch(clubesURL).then(r => r.text()),
+  fetch(partidosURL).then(r => r.text())
+]).then(([csvClubes, csvEncuentros_Huracan]) => {
       clubes = Papa.parse(csvClubes, { header: true }).data;
       Encuentros_Huracan = Papa.parse(csvEncuentros_Huracan, { header: true }).data;
       llenarSelectClubes();
