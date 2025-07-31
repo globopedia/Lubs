@@ -136,7 +136,7 @@ Promise.all([
         <p><b>Capacidad:</b> ${club.capacidad}</p>
         <p><b>Ubicaciones anteriores:</b> ${club.ubicaciones_anteriores}</p>
         <p><b>Historia:</b> ${club.historia}</p>
-        <div class="stats"><h3 style="color:#FF0000;">📊 Estadísticas</h3>${generarEstadisticas(club.nombre)}</div>
+        <div class="stats"><h3 style="color:#FF0000;">📊 Estadísticas</h3>${generarEstadisticas(club.nombre.tri())}</div>
       `;
     }
 
