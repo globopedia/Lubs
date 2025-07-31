@@ -86,16 +86,16 @@
 
   <script>
     const clubesURL = "clubes.csv";
-    const partidosURL = "partidos.csv";
+    const Encuentros_HuracanURL = "Encuentros_Huracan.csv";
     let clubes = [];
-    let partidos = [];
+    let Encuentros_Huracan = [];
 
     Promise.all([
       fetch(clubesURL).then(r => r.text()),
-      fetch(partidosURL).then(r => r.text())
-    ]).then(([csvClubes, csvPartidos]) => {
+      fetch(Encuentros_HuracanURL).then(r => r.text())
+    ]).then(([csvClubes, csvEncuentros_Huracan]) => {
       clubes = Papa.parse(csvClubes, { header: true }).data;
-      partidos = Papa.parse(csvPartidos, { header: true }).data;
+      Encuentros_Huracan = Papa.parse(csvEncuentros_Huracan, { header: true }).data;
       llenarSelectClubes();
     });
 
@@ -156,7 +156,7 @@
           let linea = "";
           resultados.forEach(res => {
             const filtro = `${nombreClub}+${comp}+${cond}+${res}`;
-            const total = partidos.filter(p => p.detalle.includes(filtro)).length;
+            const total = Encuentros_Huracan.filter(p => p.detalle.includes(filtro)).length;
             if (total > 0) {
               linea += `${total} ${res}${total>1?'s':''} | `;
             }
