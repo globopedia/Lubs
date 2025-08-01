@@ -97,32 +97,37 @@
       `;
     }
 
-    function generarEstadisticas(nombreClub) {
-      const competencias = ["Campeonato", "Copa Argentina", "Supercopa", "Copa Superliga", "Copa Maradona", "Copa Libertadores", "Copa Sudamericana", "Amistoso"];
-      const condiciones = ["local", "visitante", "neutral"];
-      const resultados = ["victoria", "empate", "derrota"];
+function generarEstadisticas(nombreClub) {
+  const competencias = [
+    "Campeonato",
+    "Copa Argentina",
+    "Supercopa",
+    "Copa Superliga",
+    "Copa Maradona",
+    "Copa Libertadores",
+    "Copa Sudamericana",
+    "Amistoso"
+  ];
 
-      let html = "";
-      competencias.forEach(comp => {
-        let compHTML = "";
-        condiciones.forEach(cond => {
-          let linea = "";
-          resultados.forEach(res => {
-            const total = Encuentros_Huracan.filter(p =>
-              p.detalle &&
-              p.detalle.toLowerCase().includes(nombreClub.toLowerCase()) &&
-              p.detalle.toLowerCase().includes(comp.toLowerCase()) &&
-              p.detalle.toLowerCase().includes(cond.toLowerCase()) &&
-              p.detalle.toLowerCase().includes(res.toLowerCase())
-            ).length;
-            if (total > 0) linea += `${total} ${res}${total>1?'s':''} | `;
-          });
-          if (linea) compHTML += `<p>✅ ${cond}: ${linea.slice(0, -3)}</p>`;
-        });
-        if (compHTML) html += `<div class="stat-group"><div class="stat-title">🏆 ${comp}</div>${compHTML}</div>`;
-      });
-      return html || "<p>Sin datos disponibles</p>";
+  let html = "";
+
+  competencias.forEach(comp => {
+    const total = Encuentros_Huracan.filter(p =>
+      p.detalle &&
+      p.detalle.toLowerCase().includes(nombreClub.toLowerCase()) &&
+      p.detalle.toLowerCase().includes(comp.toLowerCase())
+    ).length;
+
+    if (total > 0) {
+      html += `<div class="stat-group">
+                 <div class="stat-title">🏆 ${comp}</div>
+                 <p>✅ ${total} coincidencia${total>1?"s":""}</p>
+               </div>`;
     }
+  });
+
+  return html || "<p>Sin datos disponibles</p>";
+}
   </script>
 </body>
 </html>
