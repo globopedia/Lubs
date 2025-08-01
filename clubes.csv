@@ -1,4 +1,4 @@
-id,nombre,nombre,fundacion,direccion,titulos,estadio,detalles,escudo
+id,club,nombre,fundacion,direccion,titulos,estadio,detalles,escudo
 Aldosivi (MP), Aldosivi, x,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Aldosivi.png
 Argentinos Juniors, Argentinos Juniors, x,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Argentinos%20Juniors.png
 Banfield, Banfield, x,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Banfield.png
@@ -28,6 +28,7 @@ Tigre,Tigre,Club Atlético Tigre,3 de agosto de 1902,"Av. Victoria 123",3,"José
 Atl. Tucumán (TMN), Atl. Tucumán, x,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Atl.%20Tucum%C3%A1n%20(TMN).png
 Unión (SF), Unión (SF), x,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Uni%C3%B3n%20(SF).png
 Vélez Sarsfield, Vélez Sarsfield, Club Atlético Vélez Sarsfield,1° de enero de 1910,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/V%C3%A9lez%20Sarsfield.png
+
 
 
 
