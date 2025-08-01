@@ -43,7 +43,7 @@
       clubes = Papa.parse(csvClubes, { header: true, skipEmptyLines: true }).data.map(c => ({
         id: c.id?.trim(),
         nombre: c.Nombre?.trim() || c.nombre?.trim(),
-        apodo: c.Nombre || c.apodo || "",
+        apodo: c.Apodo || c.apodo || "",
         fundacion: c.Fundacion || c.fundacion || "",
         direccion: c.Direccion || c.direccion || "",
         titulos: c.Titulos || c.titulos || "",
