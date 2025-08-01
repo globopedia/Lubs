@@ -97,6 +97,13 @@
       `;
     }
 
+function normalizarTexto(texto) {
+  return texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
 function generarEstadisticas(nombreClub) {
   const competencias = [
     "Campeonato",
@@ -112,11 +119,18 @@ function generarEstadisticas(nombreClub) {
   let html = "";
 
   competencias.forEach(comp => {
-    const total = Encuentros_Huracan.filter(p =>
-      p.detalle &&
-      p.detalle.toLowerCase().includes(nombreClub.toLowerCase()) &&
-      p.detalle.toLowerCase().includes(comp.toLowerCase())
-    ).length;
+    const total = Encuentros_Huracan.filter(p => {
+      if (!p.detalle) return false;
+
+      const detalleNormalizado = normalizarTexto(p.detalle);
+      const clubNormalizado = normalizarTexto(nombreClub);
+      const compNormalizada = normalizarTexto(comp);
+
+      return (
+        detalleNormalizado.includes(clubNormalizado) &&
+        detalleNormalizado.includes(compNormalizada)
+      );
+    }).length;
 
     if (total > 0) {
       html += `<div class="stat-group">
@@ -125,6 +139,10 @@ function generarEstadisticas(nombreClub) {
                </div>`;
     }
   });
+
+  return html || "<p>Sin datos disponibles</p>";
+}
+    });
 
   return html || "<p>Sin datos disponibles</p>";
 }
