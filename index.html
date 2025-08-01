@@ -42,17 +42,13 @@
     ]).then(([csvClubes, csvEncuentros_Huracan]) => {
       clubes = Papa.parse(csvClubes, { header: true, skipEmptyLines: true }).data.map(c => ({
         id: c.id?.trim(),
-        nombre: c.Nombre?.trim() || c.nombre?.trim(),
-        apodo: c.Apodo || c.apodo || "",
+        club: c.Club?.trim() || c.club?.trim(),
+        nombre: c.Nombre || c.nombre || "",
         fundacion: c.Fundacion || c.fundacion || "",
         direccion: c.Direccion || c.direccion || "",
         titulos: c.Titulos || c.titulos || "",
         estadio: c.Estadio || c.estadio || "",
-        dir_estadio: c["Direccion del Estadio"] || c["dir_estadio"] || "",
-        inauguracion: c.Inauguracion || c.inauguracion || "",
-        capacidad: c.Capacidad || c.capacidad || "",
-        ubicaciones_anteriores: c["Ubicaciones anteriores"] || c["ubicaciones_anteriores"] || "",
-        historia: c.Historia || c.historia || "",
+        detalle: c.Detalle || c.detalle || "",
         escudo: c.Escudo || c.escudo || ""
       }));
 
@@ -90,18 +86,14 @@
       cont.innerHTML = `
         <div class="club-header">
           <img src="${club.escudo}" alt="escudo" />
-          <h2>${club.nombre}</h2>
+          <h2>${club.club}</h2>
         </div>
-        <p><b>Apodo:</b> ${club.apodo}</p>
+        <p><b>Nombre:</b> ${club.nombre}</p>
         <p><b>Fundación:</b> ${club.fundacion}</p>
         <p><b>Dirección:</b> ${club.direccion}</p>
         <p><b>Títulos:</b> ${club.titulos}</p>
         <p><b>Estadio:</b> ${club.estadio}</p>
-        <p><b>Dirección Estadio:</b> ${club.dir_estadio}</p>
-        <p><b>Inauguración:</b> ${club.inauguracion}</p>
-        <p><b>Capacidad:</b> ${club.capacidad}</p>
-        <p><b>Ubicaciones anteriores:</b> ${club.ubicaciones_anteriores}</p>
-        <p><b>Historia:</b> ${club.historia}</p>
+        <p><b>Detalle:</b> ${club.detalle}</p>
         <div class="stats"><h3 style="color:#FF0000;">📊 Estadísticas</h3>${generarEstadisticas(club.nombre.trim())}</div>
       `;
     }
