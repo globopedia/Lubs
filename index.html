@@ -66,10 +66,10 @@
       const select = document.getElementById("clubSelect");
       select.innerHTML = `<option value="">-- Seleccionar --</option>`;
       clubes.forEach(club => {
-        if (club.id && club.nombre) {
+        if (club.id && club.club) {
           const opt = document.createElement("option");
           opt.value = club.id;
-          opt.textContent = club.nombre;
+          opt.textContent = club.club;
           select.appendChild(opt);
         }
       });
