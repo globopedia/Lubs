@@ -136,8 +136,8 @@ function generarEstadisticas(nombreClub) {
           const tieneRes = detalleNormalizado.includes(normalizarTexto(res));
           const tieneCond = detalleNormalizado.includes(normalizarTexto(cond));
 
-          if (tieneClub && tieneComp) {
-            console.log(`🔍 [${comp}] ${res} ${cond} →`, p.detalle.slice(0, 80));
+          if (tieneClub && tieneComp && tieneRes && tieneCond) {
+            console.log(`✅ Coincidencia → [${comp}] ${res} ${cond} →`, p.detalle.slice(0, 60));
           }
 
           return tieneClub && tieneComp && tieneRes && tieneCond;
@@ -148,12 +148,12 @@ function generarEstadisticas(nombreClub) {
         }
       });
 
-      if (linea.trim() !== "") {
+      if (linea !== "") {
         compHTML += `<p>✅ ${cond}: ${linea.slice(0, -3)}</p>`;
       }
     });
 
-    if (compHTML.trim() !== "") {
+    if (compHTML !== "") {
       html += `
         <div class="stat-group">
           <div class="stat-title">🏆 ${comp}</div>
@@ -162,7 +162,9 @@ function generarEstadisticas(nombreClub) {
     }
   });
 
+  // 🔥 DEBUG extra
+  console.log("📊 HTML generado:", html);
+
   return html || "<p>Sin datos disponibles</p>";
-}
-</script></body>
+}</script></body>
 </html>
