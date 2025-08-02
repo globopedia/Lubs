@@ -106,43 +106,55 @@ function normalizarTexto(texto) {
 
 function generarEstadisticas(nombreClub) {
   const competencias = [
+    "Copa Libertadores",
+    "Copa Sudamericana",
     "Campeonato",
     "Copa Argentina",
     "Supercopa",
     "Copa Superliga",
     "Copa Maradona",
-    "Copa Libertadores",
-    "Copa Sudamericana",
+    "Nacional B",
     "Amistoso"
   ];
 
+  const condiciones = ["local", "neutral", "visitante"];
+  const resultados = ["Victoria", "Empate", "Derrota"];
+
   let html = "";
 
-  console.log("🔍 Buscando estadísticas para:", nombreClub);
-
   competencias.forEach(comp => {
-    const coincidencias = Encuentros_Huracan.filter(p => {
-      if (!p.detalle) return false;
+    let compHTML = "";
 
-      const detalleNormalizado = normalizarTexto(p.detalle);
-      const clubNormalizado = normalizarTexto(nombreClub);
-      const compNormalizada = normalizarTexto(comp);
+    condiciones.forEach(cond => {
+      let linea = "";
 
-      const coincide = detalleNormalizado.includes(clubNormalizado) &&
-                       detalleNormalizado.includes(compNormalizada);
+      resultados.forEach(res => {
+        const total = Encuentros_Huracan.filter(p => {
+          if (!p.detalle) return false;
 
-      if (coincide) {
-        console.log("✅ Coincidencia encontrada:", p.detalle.slice(0, 80) + "...");
+          const detalleNormalizado = normalizarTexto(p.detalle);
+          return (
+            detalleNormalizado.includes(normalizarTexto(nombreClub)) &&
+            detalleNormalizado.includes(normalizarTexto(comp)) &&
+            detalleNormalizado.includes(normalizarTexto(res)) &&
+            detalleNormalizado.includes(normalizarTexto(cond))
+          );
+        }).length;
+
+        if (total > 0) {
+          linea += `${total} ${total === 1 ? "partido" : "partidos"} ${res} | `;
+        }
+      });
+
+      if (linea) {
+        compHTML += `<p>✅ ${cond}: ${linea.slice(0, -3)}</p>`;
       }
-      return coincide;
     });
 
-    console.log(`🏆 ${comp}: ${coincidencias.length} coincidencias`);
-
-    if (coincidencias.length > 0) {
+    if (compHTML) {
       html += `<div class="stat-group">
                  <div class="stat-title">🏆 ${comp}</div>
-                 <p>✅ ${coincidencias.length} coincidencia${coincidencias.length>1?"s":""}</p>
+                 ${compHTML}
                </div>`;
     }
   });
