@@ -53,8 +53,8 @@
     }));
 
     Encuentros_Huracan = Papa.parse(csvEncuentros_Huracan, { header: true, skipEmptyLines: true }).data.map(p => ({
-      detalle: p.detalle || p.Detalle || Object.values(p)[0] || ""
-    }));
+  detalle: p["ENCUENTROS"]?.trim() || Object.values(p)[0]?.trim() || ""
+}));
 
     console.log("Clubes cargados:", clubes);
     console.log("Encuentros cargados:", Encuentros_Huracan);
