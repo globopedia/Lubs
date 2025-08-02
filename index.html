@@ -118,24 +118,31 @@ function generarEstadisticas(nombreClub) {
 
   let html = "";
 
+  console.log("🔍 Buscando estadísticas para:", nombreClub);
+
   competencias.forEach(comp => {
-    const total = Encuentros_Huracan.filter(p => {
+    const coincidencias = Encuentros_Huracan.filter(p => {
       if (!p.detalle) return false;
 
       const detalleNormalizado = normalizarTexto(p.detalle);
       const clubNormalizado = normalizarTexto(nombreClub);
       const compNormalizada = normalizarTexto(comp);
 
-      return (
-        detalleNormalizado.includes(clubNormalizado) &&
-        detalleNormalizado.includes(compNormalizada)
-      );
-    }).length;
+      const coincide = detalleNormalizado.includes(clubNormalizado) &&
+                       detalleNormalizado.includes(compNormalizada);
 
-    if (total > 0) {
+      if (coincide) {
+        console.log("✅ Coincidencia encontrada:", p.detalle.slice(0, 80) + "...");
+      }
+      return coincide;
+    });
+
+    console.log(`🏆 ${comp}: ${coincidencias.length} coincidencias`);
+
+    if (coincidencias.length > 0) {
       html += `<div class="stat-group">
                  <div class="stat-title">🏆 ${comp}</div>
-                 <p>✅ ${total} coincidencia${total>1?"s":""}</p>
+                 <p>✅ ${coincidencias.length} coincidencia${coincidencias.length>1?"s":""}</p>
                </div>`;
     }
   });
