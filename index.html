@@ -128,23 +128,25 @@ function generarEstadisticas(nombreClub) {
     condiciones.forEach(cond => {
       let linea = "";
 
-      resultados.forEach(res => {
-        const total = Encuentros_Huracan.filter(p => {
-          if (!p.detalle) return false;
+const coincidencias = Encuentros_Huracan.filter(p => {
+  if (!p.detalle) return false;
 
-          const detalleNormalizado = normalizarTexto(p.detalle);
-          return (
-            detalleNormalizado.includes(normalizarTexto(nombreClub)) &&
-            detalleNormalizado.includes(normalizarTexto(comp)) &&
-            detalleNormalizado.includes(normalizarTexto(res)) &&
-            detalleNormalizado.includes(normalizarTexto(cond))
-          );
-        }).length;
+  const detalleNormalizado = normalizarTexto(p.detalle);
 
-        if (total > 0) {
-          linea += `${total} ${total === 1 ? "partido" : "partidos"} ${res} | `;
-        }
-      });
+  const tieneClub = detalleNormalizado.includes(normalizarTexto(nombreClub));
+  const tieneComp = detalleNormalizado.includes(normalizarTexto(comp));
+  const tieneRes = detalleNormalizado.includes(normalizarTexto(res));
+  const tieneCond = detalleNormalizado.includes(normalizarTexto(cond));
+
+  if (tieneClub && tieneComp) {
+    console.log(`🔍 [${comp}] ${res} ${cond} →`, p.detalle.slice(0, 100));
+    console.log("Club?", tieneClub, "| Comp?", tieneComp, "| Res?", tieneRes, "| Cond?", tieneCond);
+  }
+
+  return tieneClub && tieneComp && tieneRes && tieneCond;
+}).length;
+
+const total = coincidencias;
 
       if (linea) {
         compHTML += `<p>✅ ${cond}: ${linea.slice(0, -3)}</p>`;
