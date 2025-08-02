@@ -101,68 +101,68 @@
     return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 
-  function generarEstadisticas(nombreClub) {
-    const competencias = [
-      "Copa Libertadores",
-      "Copa Sudamericana",
-      "Campeonato",
-      "Copa Argentina",
-      "Supercopa",
-      "Copa Superliga",
-      "Copa Maradona",
-      "Nacional B",
-      "Amistoso"
-    ];
+function generarEstadisticas(nombreClub) {
+  const competencias = [
+    "Copa Libertadores",
+    "Copa Sudamericana",
+    "Campeonato",
+    "Copa Argentina",
+    "Supercopa",
+    "Copa Superliga",
+    "Copa Maradona",
+    "Nacional B",
+    "Amistoso"
+  ];
 
-    const condiciones = ["local", "neutral", "visitante"];
-    const resultados = ["Victoria", "Empate", "Derrota"];
+  const condiciones = ["local", "neutral", "visitante"];
+  const resultados = ["Victoria", "Empate", "Derrota"];
 
-    let html = "";
+  let html = "";
 
-    competencias.forEach(comp => {
-      let compHTML = "";
+  competencias.forEach(comp => {
+    let compHTML = "";
 
-      condiciones.forEach(cond => {
-        let linea = "";
+    condiciones.forEach(cond => {
+      let linea = "";
 
-        resultados.forEach(res => {
-          const coincidencias = Encuentros_Huracan.filter(p => {
-            if (!p.detalle) return false;
+      resultados.forEach(res => {
+        const coincidencias = Encuentros_Huracan.filter(p => {
+          if (!p.detalle) return false;
 
-            const detalleNormalizado = normalizarTexto(p.detalle);
+          const detalleNormalizado = normalizarTexto(p.detalle);
 
-            const tieneClub = detalleNormalizado.includes(normalizarTexto(nombreClub));
-            const tieneComp = detalleNormalizado.includes(normalizarTexto(comp));
-            const tieneRes = detalleNormalizado.includes(normalizarTexto(res));
-            const tieneCond = detalleNormalizado.includes(normalizarTexto(cond));
+          const tieneClub = detalleNormalizado.includes(normalizarTexto(nombreClub));
+          const tieneComp = detalleNormalizado.includes(normalizarTexto(comp));
+          const tieneRes = detalleNormalizado.includes(normalizarTexto(res));
+          const tieneCond = detalleNormalizado.includes(normalizarTexto(cond));
 
-            if (tieneClub && tieneComp) {
-              console.log(`🔍 [${comp}] ${res} ${cond} →`, p.detalle.slice(0, 100));
-              console.log("Club?", tieneClub, "| Comp?", tieneComp, "| Res?", tieneRes, "| Cond?", tieneCond);
-            }
-
-            return tieneClub && tieneComp && tieneRes && tieneCond;
-          }).length;
-
-          if (coincidencias > 0) {
-            linea += `${coincidencias} ${coincidencias === 1 ? "partido" : "partidos"} ${res} | `;
+          if (tieneClub && tieneComp) {
+            console.log(`🔍 [${comp}] ${res} ${cond} →`, p.detalle.slice(0, 80));
           }
-        });
 
-        if (linea) {
-          compHTML += `<p>✅ ${cond}: ${linea.slice(0, -3)}</p>`;
+          return tieneClub && tieneComp && tieneRes && tieneCond;
+        }).length;
+
+        if (coincidencias > 0) {
+          linea += `${coincidencias} ${coincidencias === 1 ? "partido" : "partidos"} ${res} | `;
         }
       });
 
-      if (compHTML) {
-        html += `<div class="stat-group">
-                   <div class="stat-title">🏆 ${comp}</div>
-                   ${compHTML}
-                 </div>`;
+      if (linea.trim() !== "") {
+        compHTML += `<p>✅ ${cond}: ${linea.slice(0, -3)}</p>`;
       }
     });
 
-    return html || "<p>Sin datos disponibles</p>";
-  }
+    if (compHTML.trim() !== "") {
+      html += `
+        <div class="stat-group">
+          <div class="stat-title">🏆 ${comp}</div>
+          ${compHTML}
+        </div>`;
+    }
+  });
+
+  return html || "<p>Sin datos disponibles</p>";
+}
 </script></body>
 </html>
