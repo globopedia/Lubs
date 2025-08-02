@@ -56,9 +56,6 @@
         detalle: p.detalle || p.Detalle || Object.values(p)[0] || ""
       }));
 
-      console.log("Clubes cargados:", clubes);
-      console.log("Encuentros cargados:", Encuentros_Huracan);
-
       llenarSelectClubes();
     });
 
@@ -97,52 +94,53 @@
       `;
     }
 
-function normalizarTexto(texto) {
-  return texto
-    .toLowerCase()
-    .normalize("NFD") // separa acentos
-    .replace(/[\u0300-\u036f]/g, ""); // elimina acentos
-}
-
-function generarEstadisticas(nombreClub) {
-  const competencias = [
-    "Copa Libertadores",
-    "Copa Sudamericana",
-    "Campeonato",
-    "Copa Argentina",
-    "Copa Superliga",
-    "Copa Maradona",
-    "Supercopa",
-    "Nacional B",
-    "Amistoso"
-  ];
-
-  let html = "";
-
-  competencias.forEach(comp => {
-    const total = Encuentros_Huracan.filter(p => {
-      if (!p.detalle) return false;
-
-      const detalleNormalizado = normalizarTexto(p.detalle);
-      const clubNormalizado = normalizarTexto(nombreClub);
-      const compNormalizada = normalizarTexto(comp);
-
-      return (
-        detalleNormalizado.includes(clubNormalizado) &&
-        detalleNormalizado.includes(compNormalizada)
-      );
-    }).length;
-
-    if (total > 0) {
-      html += `<div class="stat-group">
-                 <div class="stat-title">🏆 ${comp}</div>
-                 <p>✅ ${total} partido${total>1?"s":""}</p>
-               </div>`;
+    function normalizarTexto(texto) {
+      return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
-  });
 
-  return html || "<p>Sin datos disponibles</p>";
-}
+    function generarEstadisticas(nombreClub) {
+      const competencias = [
+        "Copa Libertadores",
+        "Copa Sudamericana",
+        "Campeonato",
+        "Copa Argentina",
+        "Copa Superliga",
+        "Copa Maradona",
+        "Supercopa",
+        "Nacional B",
+        "Amistoso"
+      ];
+
+      let html = "";
+
+      competencias.forEach(comp => {
+        let victorias = 0, empates = 0, derrotas = 0;
+
+        Encuentros_Huracan.forEach(p => {
+          if (!p.detalle) return;
+          const detalleNorm = normalizarTexto(p.detalle);
+          if (
+            detalleNorm.includes(normalizarTexto(nombreClub)) &&
+            detalleNorm.includes(normalizarTexto(comp))
+          ) {
+            if (detalleNorm.includes("victoria")) victorias++;
+            else if (detalleNorm.includes("empate")) empates++;
+            else if (detalleNorm.includes("derrota")) derrotas++;
+          }
+        });
+
+        if (victorias + empates + derrotas > 0) {
+          html += `<div class="stat-group">
+                     <div class="stat-title">🏆 ${comp}</div>
+                     <p>✅ Victorias: ${victorias}</p>
+                     <p>🤝 Empates: ${empates}</p>
+                     <p>❌ Derrotas: ${derrotas}</p>
+                   </div>`;
+        }
+      });
+
+      return html || "<p>Sin datos disponibles</p>";
+    }
   </script>
 </body>
 </html>
