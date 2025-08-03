@@ -1,21 +1,21 @@
 id,club,nombre,fundacion,direccion,titulos,estadio,detalles,escudo
 Aldosivi (MP), Aldosivi (MP),Club Atlético Aldosivi,29 de marzo de 1913,Elcano 3321 - Mar del Plata (Buenos Aires),2 Campeonatos de 1°B Nacional (2017/18 y 2024) - 6 campeonatos de la Liga Marplatense (1973-1974-1975 1989 1993 y 1994),Salvador Tatore Vuoso -ex Adolfo López- (200 espectadores).  En Martínez de Hoz 1800 -Mar del Plata-.,"fue creado por los dueños de la compañía que construyó el puerto de esa ciudad, que se llamaban Allard, Dollfus, Sillard y Viriot, y cuyas dos primeras letras de cada apellido conformaron el nombre. Su camiseta original tenía los colores de Francia, pero cuando tuvieron que recoger las telas donadas por una casa textil se encontraron con que eran amarillas y verdes.  Entre 1993 y 2000 contó con el estadio Adolfo López, aunque actualmente juega en el Estadio José María Minella.  Entre 2009 y 2010 se firmó un trato con la Municipalidad de Gral. Pueyrredón, que le concede el predio Tatore Vuoso por tres décadas, donde construirá su campo.  Jugó los Nacionales de 1974 a 1976.  Hasta 2011 había jugado 10 años en 1° Nacional",https://globopedia.github.io/Rivales-Huracan/Escudos/Aldosivi (MP).png
-Alianza Lima,Alianza Lima,Club Alianza Lima,x,x,x,x,x,x
-Alianza Municipal,Alianza Municipal,Alianza - Dep. Municipal,x,x,x,x,x,x
-Al Boys,Al Boys,Club Atlético All Boys,x,x,x,x,x,x
-Almagro,Almagro,Club Almagro,x,x,x,x,x,x
-Alte. Brown,Alte. Brown,Club Almirante Brown,x,x,x,x,x,x
-Alvear,Alvear,Club Atlético Alvear,x,x,x,x,x,x
-América (Bra),América (Bra),América Football Club,x,x,x,x,x,x
-Dep. Anzoátegui (Ven),Dep. Anzoátegui (Ven),Deportivo Anzoátegui Sport Club,x,x,x,x,Desapareció en 2019,x
+Alianza Lima,Alianza Lima,Club Alianza Lima,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Alianza Lima (Per).png
+Alianza Municipal,Alianza Municipal,Alianza - Dep. Municipal,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Alianza Municipal (Per).png
+All Boys,All Boys,Club Atlético All Boys,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/All Boys.png
+Almagro,Almagro,Club Almagro,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Almagro.png
+Alte. Brown,Alte. Brown,Club Almirante Brown,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Alte Brown.png
+Alvear,Alvear,Club Atlético Alvear,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Alvear.png
+América (Bra),América (Bra),América Football Club,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/América (Col).png
+Dep. Anzoátegui (Ven),Dep. Anzoátegui (Ven),Deportivo Anzoátegui Sport Club,x,x,x,x,Desapareció en 2019,https://globopedia.github.io/Rivales-Huracan/Escudos/Dep Anzoátegui (Ven).png
 Arg. de Rosario,Arg. de Rosario,Club Atlético Argentino,x,x,x,x,x,x
 Arg. de Banfield,Arg. de Banfield,Club Argentino de Banfield,x,x,x,x,x,x
 Arg. de Quilmes,Arg. de Quilmes,Club Atlético Argentino de Quilmes,x,x,x,x,x,x
 Arg. del Sud,Arg. del Sud,Club Atlético Argentino del Sud,x,x,x,x,x,x
 Argentinos Juniors, Argentinos Juniors,Asociación Atlética Argentinos Juniors,x,x,1 Copa Libertadores (1985) - 3 Campeonatos de 1° División (1984-NA85 y CL09) - 2 Campeonatos de 1°B Nacional (96/97 y 16/17),x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Argentinos%20Juniors.png
 Dep. Armenio,Dep. Armenio,Club Deportivo Armenio,x,x,x,x,x,x
-Arsenal,Arsenal,Arsenal Fútbol Club,x,1 Copa Sudamericana (2007) - 1 Campeonato de 1° División (CL12) - 1 Copa Argentina (2013) - 1 Supercopa Argentina (2012) - 1 Campeonato de 1°B Nacional (18/19),x,x,x,x
-Atlanta,Atlanta,Club Atlético Atlanta,x,Copa Suecia 1958,x,x,x,x
+Arsenal,Arsenal,Arsenal Fútbol Club,x,1 Copa Sudamericana (2007) - 1 Campeonato de 1° División (CL12) - 1 Copa Argentina (2013) - 1 Supercopa Argentina (2012) - 1 Campeonato de 1°B Nacional (18/19),x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Arsenal.png
+Atlanta,Atlanta,Club Atlético Atlanta,x,Copa Suecia 1958,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Atlanta.png
 Atlanta Argentinos,Atlanta Argentinos,Club Atlético All Boys,x,x,x,x,x,x
 Sp. Balcarce,Sp. Balcarce,Club Sportivo Balcarce,x,1 Copa Competencia (1931),x,x,x,x
 Banfield, Banfield,Club Atlético Banfield,x,1 Campeonato de 1° División (AP09) - 3 Campeonatos de 1°B Nacional (92/93 00/01 y 13/14),x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Banfield.png
@@ -26,38 +26,38 @@ Belgrano (Cba), Belgrano (Cba), Club Atlético Belgrano,19 de marzo de 1905,"Dr.
 Bernal,Bernal,Bernal,x,x,x,x,x,x
 Boca Alumni,Boca Alumni,Club Atlético Boca Alumni,x,x,x,x,x,x
 Boca Juniors, Boca Juniors, Club Atlético Boca Juniors,3 de abril de 1905,x,6 Copas Libertadores (1977-1978 2000-2001 2003 y 2007) - 2 Copas Sudamericana (2004-2005) - 1 Supercopa (1989) - 36 Campeonatos de 1° División (1919-1920 1923-1924 1926 1930-1931 1934-1935 1940 1943-1944 1954 1962 1964-1965 NA69 NA70 1976-NA76 1981 AP92 AP98-CL99 AP00 AP03 AP05-Cl06 AP08 AP11 2015 16/17-17/18 19/20 y 2022-CO22) - 4 Copas Argentina (1969 2012 2015 y 2020) - Copa Maradona 2020 - 3 Copas Competencia (1919 1925 y 1946) - Campeonato Estímulo 1926 - 1 Copa de Honor (1920) - 2 Supercopas Argentina (2018 y 2022) - 2 Copas Escobar Gerona (1945-1946) - 5 Copas Ibarguren (1919 1923-1924 1940 y 1944),x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Boca%20Juniors.png
-Boca Unidos (Cts),Boca Unidos (Cts),Club Atlético Boca Unidos,x,x,x,x,x,x
-Botafogo (Bra),Botafogo (Bra),Botafogo de Futebol e Regatas,x,x,x,x,x,x
-Brown de Adrogué,Brown de Adrogué,Club Atlético Brown,x,x,x,x,x,x
+Boca Unidos (Cts),Boca Unidos (Cts),Club Atlético Boca Unidos,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Boca Unidos (Cts).png
+Botafogo (Bra),Botafogo (Bra),Botafogo de Futebol e Regatas,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Botafogo (Bra).png
+Brown de Adrogué,Brown de Adrogué,Club Atlético Brown,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Brown de Adrogué.png
 Sp Belgrano (Fra),Sp. Belgrano (Fra),Club Sportivo Belgrano,x,x,x,x,x,x
 Sp. Ben Hur (Rla),Sp. Ben Hur (Rla),Club Sportivo Ben Hur,x,x,x,x,x,x
 Sp. Buenos Aires,Sp. Buenos Aires,Club Sportivo Buenos Aires,x,x,x,x,x,x
 Cámara Mercantil,Cámara Mercantil,Club Atlético Cámara Mercantil,x,x,x,x,x,x
-Caracas FC (Ven),Caracas FC (Ven),Caracas Fútbol Club,x,x,x,x,x,x
-Central Córdoba (Ros),Central Córdoba (Ros), Club Atlético Central Córdoba,x,1 Campeonato Béccar Varela (1933),x,x,x,x
+Caracas FC (Ven),Caracas FC (Ven),Caracas Fútbol Club,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Caracas FC (Ven).png
+Central Córdoba (Ros),Central Córdoba (Ros), Club Atlético Central Córdoba,x,1 Campeonato Béccar Varela (1933),x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Central Córdoba (Ros).png
 Central Córdoba (SE),Central Córdoba (SE),Club Atlético Central Córdoba,3 de junio de 1919,Saavedra y San Martín - Centro (Santiago del Estero),1 Copa Argentina (2024) - 25 campeonatos de la Liga Santiagueña (1945 1957 1959-1960-1961-1962-1963-1964-1965-1966-1967 1969-1970-1971 1974-1975-1976 1978 1983-1984 AP86 CL95 AP97 AP99 y 2010) y 1 Copa Santiago (2014),x,"creado por miembros del Ferrocarril Belgrano, que antes se llamaba Central Córdoba Railway.  Clasificó para los Nacionales de 1967 y 1971, quedando en las puertas en 1968, por lo que jugó el Promocional.  Hasta 2025 había jugado 9 años en 1° Nacional y 7 en 1° División",https://globopedia.github.io/Rivales-Huracan/Escudos/Central%20C%C3%B3rdoba%20(SE).png
-Central Norte (Sta),Central Norte (Sta),Club Atlético Central Norte,x,x,x,x,x,x
-Cerro Corá (Par),Cerro Corá (Par),Club Cerro Corá,x,x,x,x,x,x
-Chacarita Juniors,Chacarita Juniors,Club Atlético Chacarita Juniors,x,1 Campeonato de 1° División (1969),x,x,x,x
-Chaco For Ever,Brown de Adrogué,Club Atlético Brown,x,x,x,x,x,x
+Central Norte (Sta),Central Norte (Sta),Club Atlético Central Norte,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Central Norte (Sta).png
+Cerro Corá (Par),Cerro Corá (Par),Club Cerro Corá,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Cerro Corá (Par).png
+Chacarita Juniors,Chacarita Juniors,Club Atlético Chacarita Juniors,x,1 Campeonato de 1° División (1969),x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Chacarita Juniors.png
+Chaco For Ever,Brown de Adrogué,Club Atlético Brown,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Chaco For Ever (Cha).png
 Chalaco,Brown de Adrogué,Club Atlético Brown,x,x,x,x,x,x
 Cipolletti,Cipolletti,Club Cipolletti,x,x,x,x,x,x
-Colegiales,Colegiales,Club Atlético Colegiales,x,x,x,x,x,x
-Colo Colo (Chi),Colo Colo (Chi),Club Colo Colo,x,x,x,x,x,x
-Colón (SF),Colón (SF),Club Atlético Colón,x,1 Campeonato de 1° División (CO21),x,x,x,x
-Columbian,Columbian,Columbian Football Club,x,x,x,x,x,x
-Comercio,Comercio,Club Atlético Comercio,x,x,x,x,x,x
-Atl. Concepción (Tmn),Atl. Concepción (Tmn),Club Atlético Concepción,x,x,x,x,x,x
-CAI (CR),CAI (CR),Comisión de Actividades Infantiles,x,x,x,x,x,x
+Colegiales,Colegiales,Club Atlético Colegiales,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Colegiales.png
+Colo Colo (Chi),Colo Colo (Chi),Club Colo Colo,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Colo Colo (Chi).png
+Colón (SF),Colón (SF),Club Atlético Colón,x,1 Campeonato de 1° División (CO21),x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Colón (SF).png
+Columbian,Columbian,Columbian Football Club,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Columbian.png
+Comercio,Comercio,Club Atlético Comercio,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Comercio.png
+Atl. Concepción (Tmn),Atl. Concepción (Tmn),Club Atlético Concepción,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Atl. Concepción (Tmn).png
+CAI (CR),CAI (CR),Comisión de Actividades Infantiles,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/CAI (CR).png
 Sel. Corea del Sur,Sel. Corea del Sur,Asociación de Fútbol de Corea del Sur,x,x,x,x,x,x
-Corinthians (Bra),Corinthians (Bra),Sport Club Corinthians Paulista,x,x,x,x,x,x
-Crucero del Norte (Pds),Crucero del Norte (Pds),Club Mutual Social y Deportivo Crucero del Norte,x,x,x,x,x,x
-Cruzeiro (Bra),Cruzeiro (Bra),Cruzeiro Esporte Clube,x,x,x,x,x,x
+Corinthians (Bra),Corinthians (Bra),Sport Club Corinthians Paulista,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Corinthians (Bra).png
+Crucero del Norte (Pds),Crucero del Norte (Pds),Club Mutual Social y Deportivo Crucero del Norte,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Crucero del Norte (Pds).png
+Cruzeiro (Bra),Cruzeiro (Bra),Cruzeiro Esporte Clube,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Cruzeiro MG (Bra).png
 Defensa y Justicia, Defensa y Justicia,Club Social y Deportivo Defensa y Justicia,x,1 Copa Sudamericana (2020),x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Defensa%20y%20Justicia.png
 Sp. Dock Sud,Sp. Dock Sud,Club Sportivo Dock Sud,x,1 Campeonato de 1° División (1933),x,x,x,x
 Estudiantes (LP), Estudiantes (LP),Club Estudiantes de La Plata,4 de agosto de 1905,"Av. 1, entre 55 y 57 - La Plata (Buenos Aires)",4 Copas Libertadores (1968-1969-1970 y 2009) - 7 Campeonatos de 1° División (1913 1967 1982-NA83 AP06 AP10 y CO24) - 1 Copa Argentina (2023) - 1 Campeonato de la República (1945) - 1 Copa Escobar (1944) - 1 Campeonato de 1°B Nacional (94/95),"Jorge Luis Hirschi (32.500 espectadores).  Ubicado en Calle 1 y 55 - La Plata-.  Inaugurado en 1907",Lo apodan 'Pincharrata',https://globopedia.github.io/Rivales-Huracan/Escudos/Estudiantes%20(LP).png
 Estudiantil Porteño,Estudiantil Porteño,Club Atlético Estudiantil Porteño,x,2 Campeonatos de 1° División (1931 y 1934),x,x,x,x
-Ferro Carril Oeste,Ferro Carril Oeste,Club Ferro Carril Oeste,x,2 Campeonatos de 1° División (NA82 y NA84),x,x,x,x
+Ferro Carril Oeste,Ferro Carril Oeste,Club Ferro Carril Oeste,x,2 Campeonatos de 1° División (NA82 y NA84),x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Ferro Carril Oeste.png
 Gimnasia y Esgrima (LP), Gimnasia y Esgrima (LP),Club de Gimnasia y Esgrima La Plata,x,1 Campeonato de 1° División (1929) - Copa Centenario 1993,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Gimnasia%20y%20Esgrima%20(LP).png
 Godoy Cruz (Mza), Godoy Cruz (Mza),Club Deportivo Godoy Cruz Antonio Tomba,1° de junio de 1921,Godoy Cruz (Mendoza),1 Campeonato de 1°B Nacional (AP05) - Liga Mendocina (),x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Godoy%20Cruz%20(MZA).png
 Independiente, Independiente,Club Atlético Independiente,x,x,7 Copas Libertadores (1964-1965 1972-1973-1974-1975 y 1984) - 2 Copas Sudamericana (2010 y 2017) - 2 Supercopas (1994-1995) - 16 Campeonatos de 1° División (1922 1926 1938-1939 1948 1960 1963 NA67 1970 1971 NA77 NA78 1983 88/89 CL94 y CL02) - 4 Copas Competencia (1914 y 1924-1925-1926) - 2 Copas Río de la Plata (1938-1939) - 2 Copas Ibarguren (1938-1939) - 1 Copa Escobar (1939),x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Independiente.png
@@ -88,4 +88,5 @@ Tiro Federal (Ros),Tiro Federal (Ros),Club Atlético Tiro Federal Argentino,x,1 
 Atl. Tucumán (Tmn), Atl. Tucumán (Tmn),Club Atlético Tucumán,x,2 Campeonatos de 1°B Nacional (08/09 y 2015),x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Atl.%20Tucum%C3%A1n%20(TMN).png
 Unión (SF), Unión (SF),Club Atlético Unión,x,x,x,x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/Uni%C3%B3n%20(SF).png
 Vélez Sarsfield, Vélez Sarsfield, Club Atlético Vélez Sarsfield,1° de enero de 1910,x,1 Copa Libertadores (1994) - 1 Supercopa (1996) - 10 Campeonatos de 1° División (NA68 CL93 AP95-CL96 CL98 CL05 CL09 CL11 IN12 y 2024) - 1 Copa Campeonato () - 1 Supercopa (2013),x,x,https://globopedia.github.io/Rivales-Huracan/Escudos/V%C3%A9lez%20Sarsfield.png
+
 
