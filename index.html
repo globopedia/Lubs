@@ -50,7 +50,7 @@
         colores: c.Colores || c.colores || "",
         titulos: c.Titulos || c.titulos || "",
         estadio: c.Estadio || c.estadio || "",
-        detalle: c.Detalle || c.detalle || "",
+        curiosidades: c.Curiosidades || c.curiosidades || "",
         escudo: c.Escudo || c.escudo || ""
       }));
 
@@ -93,7 +93,7 @@
         <p><b>Colores:</b> ${club.colores}</p>
         <p><b>Títulos:</b> ${club.titulos}</p>
         <p><b>Estadio:</b> ${club.estadio}</p>
-        <p><b>Detalle:</b> ${club.detalle}</p>
+        <p><b>Curiosidades:</b> ${club.curiosidades}</p>
         <div class="stats"><h3 style="color:#FF0000;">📊 Estadísticas</h3>${generarEstadisticas(club.club.trim())}</div>
       `;
     }
