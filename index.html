@@ -114,33 +114,26 @@ function generarEstadisticas(nombreClub) {
         "Amistoso"
     ];
     const condiciones = ["local", "neutral", "visitante"];
+    const nombreNorm = normalizarTexto(nombreClub);
     let html = "";
 
     competencias.forEach(comp => {
         let compHTML = "";
         const bloquesConDatos = [];
+        const compNorm = normalizarTexto(comp);
 
         condiciones.forEach(cond => {
             let victorias = 0, empates = 0, derrotas = 0;
+            const condRegex = new RegExp(`-${cond}-`, "i"); // busca "-local-", "-neutral-", "-visitante-"
 
             Encuentros_Huracan.forEach(p => {
                 if (!p.detalle) return;
                 const detalleNorm = normalizarTexto(p.detalle);
 
-                // Buscar nombre del club y competencia
-                if (detalleNorm.includes(normalizarTexto(nombreClub)) &&
-                    detalleNorm.includes(normalizarTexto(comp))) {
-
-                    // Buscar condición de cancha
-                    if (
-                        (cond === "local" && detalleNorm.includes("-local-")) ||
-                        (cond === "neutral" && detalleNorm.includes("-neutral-")) ||
-                        (cond === "visitante" && detalleNorm.includes("-visitante-"))
-                    ) {
-                        if (detalleNorm.includes("victoria")) victorias++;
-                        else if (detalleNorm.includes("empate")) empates++;
-                        else if (detalleNorm.includes("derrota")) derrotas++;
-                    }
+                if (detalleNorm.includes(nombreNorm) && detalleNorm.includes(compNorm) && condRegex.test(detalleNorm)) {
+                    if (/victoria/i.test(detalleNorm)) victorias++;
+                    else if (/empate/i.test(detalleNorm)) empates++;
+                    else if (/derrota/i.test(detalleNorm)) derrotas++;
                 }
             });
 
@@ -155,7 +148,6 @@ function generarEstadisticas(nombreClub) {
         });
 
         if (bloquesConDatos.length > 0) {
-            // Insertar separadores solo entre bloques que tengan datos
             const bloqueHTML = bloquesConDatos.join('<hr style="border:none;border-top:1px solid #FF0000; margin:8px 0;">');
             html += `<div class="stat-group"><div class="stat-title">🏆 ${comp}</div>${bloqueHTML}</div>`;
         }
