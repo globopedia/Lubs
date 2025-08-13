@@ -102,48 +102,66 @@ function normalizarTexto(texto) {
 }
 
 function generarEstadisticas(nombreClub) {
-  const competencias = [
-    "Copa Libertadores", "Copa Sudamericana", "Campeonato",
-    "Copa Argentina", "Copa Superliga", "Copa Maradona",
-    "Supercopa", "Nacional B", "Amistoso"
-  ];
-  const condiciones = ["local", "neutral", "visitante"];
-  let html = "";
+    const competencias = [
+        "Copa Libertadores",
+        "Copa Sudamericana",
+        "Campeonato",
+        "Copa Argentina",
+        "Copa Superliga",
+        "Copa Maradona",
+        "Supercopa",
+        "Nacional B",
+        "Amistoso"
+    ];
+    const condiciones = ["local", "neutral", "visitante"];
+    let html = "";
 
-  competencias.forEach(comp => {
-    let compHTML = "";
-    condiciones.forEach((cond, idx) => {
-      let victorias = 0, empates = 0, derrotas = 0;
+    competencias.forEach(comp => {
+        let compHTML = "";
+        const bloquesConDatos = [];
 
-      Encuentros_Huracan.forEach(p => {
-        if (!p.detalle) return;
-        const detalleNorm = normalizarTexto(p.detalle);
+        condiciones.forEach(cond => {
+            let victorias = 0, empates = 0, derrotas = 0;
 
-        // Buscar la condición con sufijo "-local-", "-neutral-", "-visitante-"
-        let condRegex = new RegExp(`-${cond}-`, "i");
-        if (detalleNorm.includes(normalizarTexto(nombreClub)) && detalleNorm.includes(normalizarTexto(comp)) && condRegex.test(detalleNorm)) {
-          if (/victoria/i.test(detalleNorm)) victorias++;
-          else if (/empate/i.test(detalleNorm)) empates++;
-          else if (/derrota/i.test(detalleNorm)) derrotas++;
+            Encuentros_Huracan.forEach(p => {
+                if (!p.detalle) return;
+                const detalleNorm = normalizarTexto(p.detalle);
+
+                // Buscar nombre del club y competencia
+                if (detalleNorm.includes(normalizarTexto(nombreClub)) &&
+                    detalleNorm.includes(normalizarTexto(comp))) {
+
+                    // Buscar condición de cancha
+                    if (
+                        (cond === "local" && detalleNorm.includes("-local-")) ||
+                        (cond === "neutral" && detalleNorm.includes("-neutral-")) ||
+                        (cond === "visitante" && detalleNorm.includes("-visitante-"))
+                    ) {
+                        if (detalleNorm.includes("victoria")) victorias++;
+                        else if (detalleNorm.includes("empate")) empates++;
+                        else if (detalleNorm.includes("derrota")) derrotas++;
+                    }
+                }
+            });
+
+            if (victorias + empates + derrotas > 0) {
+                let bloque = `<div class="stat-title">📍 ${cond.charAt(0).toUpperCase() + cond.slice(1)}</div><ul>`;
+                if (victorias > 0) bloque += `<li>✅ Victorias: ${victorias}</li>`;
+                if (empates > 0) bloque += `<li>🤝 Empates: ${empates}</li>`;
+                if (derrotas > 0) bloque += `<li>❌ Derrotas: ${derrotas}</li>`;
+                bloque += `</ul>`;
+                bloquesConDatos.push(bloque);
+            }
+        });
+
+        if (bloquesConDatos.length > 0) {
+            // Insertar separadores solo entre bloques que tengan datos
+            const bloqueHTML = bloquesConDatos.join('<hr style="border:none;border-top:1px solid #FF0000; margin:8px 0;">');
+            html += `<div class="stat-group"><div class="stat-title">🏆 ${comp}</div>${bloqueHTML}</div>`;
         }
-      });
-
-      if (victorias + empates + derrotas > 0) {
-        let bloque = `<div class="stat-title">📍 ${cond.charAt(0).toUpperCase() + cond.slice(1)}</div><ul>`;
-        if (victorias > 0) bloque += `<li>✅ Victorias: ${victorias}</li>`;
-        if (empates > 0) bloque += `<li>🤝 Empates: ${empates}</li>`;
-        if (derrotas > 0) bloque += `<li>❌ Derrotas: ${derrotas}</li>`;
-        bloque += `</ul>`;
-        compHTML += bloque;
-        // Separador si hay más bloques después con datos
-        if (idx < condiciones.length - 1) compHTML += `<hr style="border:none;border-top:1px solid #FF0000; margin:8px 0;">`;
-      }
     });
 
-    if (compHTML) html += `<div class="stat-group"><div class="stat-title">🏆 ${comp}</div>${compHTML}</div>`;
-  });
-
-  return html || "<p>Sin datos disponibles</p>";
+    return html || "<p>Sin datos disponibles</p>";
 }
 </script>
 </body>
