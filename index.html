@@ -18,6 +18,7 @@
     .stats { margin-top: 20px; }
     .stat-group { margin-bottom: 20px; padding: 10px; border: 1px solid #FF0000; border-radius: 12px; background: #fff5f5; }
     .stat-title { font-weight: bold; color: #FF0000; margin-bottom: 5px; }
+    ul { margin: 0; padding-left: 20px; }
   </style>
 </head>
 <body>
@@ -115,30 +116,50 @@
         "Amistoso"
       ];
 
+      const condiciones = ["local", "neutral", "visitante"];
+
       let html = "";
 
       competencias.forEach(comp => {
-        let victorias = 0, empates = 0, derrotas = 0;
+        let compHTML = "";
 
-        Encuentros_Huracan.forEach(p => {
-          if (!p.detalle) return;
-          const detalleNorm = normalizarTexto(p.detalle);
-          if (
-            detalleNorm.includes(normalizarTexto(nombreClub)) &&
-            detalleNorm.includes(normalizarTexto(comp))
-          ) {
-            if (detalleNorm.includes("victoria")) victorias++;
-            else if (detalleNorm.includes("empate")) empates++;
-            else if (detalleNorm.includes("derrota")) derrotas++;
+        condiciones.forEach((cond, idx) => {
+          let victorias = 0, empates = 0, derrotas = 0;
+
+          Encuentros_Huracan.forEach(p => {
+            if (!p.detalle) return;
+            const detalleNorm = normalizarTexto(p.detalle);
+
+            if (
+              detalleNorm.includes(normalizarTexto(nombreClub)) &&
+              detalleNorm.includes(normalizarTexto(comp)) &&
+              detalleNorm.includes(cond)
+            ) {
+              if (detalleNorm.includes("victoria")) victorias++;
+              else if (detalleNorm.includes("empate")) empates++;
+              else if (detalleNorm.includes("derrota")) derrotas++;
+            }
+          });
+
+          if (victorias + empates + derrotas > 0) {
+            let bloque = `<div class="stat-title">📍 ${cond.charAt(0).toUpperCase() + cond.slice(1)}</div><ul>`;
+            if (victorias > 0) bloque += `<li>✅ Victorias: ${victorias}</li>`;
+            if (empates > 0) bloque += `<li>🤝 Empates: ${empates}</li>`;
+            if (derrotas > 0) bloque += `<li>❌ Derrotas: ${derrotas}</li>`;
+            bloque += `</ul>`;
+            compHTML += bloque;
+
+            // Separador si hay más bloques después con datos
+            if (idx < condiciones.length - 1) {
+              compHTML += `<hr style="border:none;border-top:1px solid #FF0000; margin:8px 0;">`;
+            }
           }
         });
 
-        if (victorias + empates + derrotas > 0) {
+        if (compHTML) {
           html += `<div class="stat-group">
                      <div class="stat-title">🏆 ${comp}</div>
-                     <p>✅ Victorias: ${victorias}</p>
-                     <p>🤝 Empates: ${empates}</p>
-                     <p>❌ Derrotas: ${derrotas}</p>
+                     ${compHTML}
                    </div>`;
         }
       });
