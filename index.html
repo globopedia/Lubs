@@ -103,53 +103,59 @@
       return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
-    function generarEstadisticas(nombreClub) {
-      const competencias = [
-        "Copa Libertadores",
-        "Copa Sudamericana",
-        "Campeonato",
-        "Copa Argentina",
-        "Copa Superliga",
-        "Copa Maradona",
-        "Supercopa",
-        "Nacional B",
-        "Amistoso"
-      ];
-      const condiciones = ["local", "visitante", "neutral"];
-      let html = "";
+function generarEstadisticas(nombreClub) {
+  const competencias = [
+    "Copa Libertadores",
+    "Copa Sudamericana",
+    "Campeonato",
+    "Copa Argentina",
+    "Copa Superliga",
+    "Copa Maradona",
+    "Supercopa",
+    "Nacional B",
+    "Amistoso"
+  ];
+  const condiciones = ["local", "neutral", "visitante"];
+  let html = "";
 
-      competencias.forEach(comp => {
-        let compHTML = `<div class="stat-group"><div class="stat-title">🏆 ${comp}</div>`;
-        let tieneDatos = false;
+  const nombreNorm = normalizarTexto(nombreClub);
 
-        condiciones.forEach(cond => {
-          let victorias = 0, empates = 0, derrotas = 0;
+  competencias.forEach(comp => {
+    const compNorm = normalizarTexto(comp);
+    let compHTML = `<div class="stat-group"><div class="stat-title">🏆 ${comp}</div>`;
+    let tieneDatos = false;
 
-          Encuentros_Huracan.forEach(p => {
-            const detalleNorm = normalizarTexto(p.detalle);
-            if (
-              detalleNorm.includes(normalizarTexto(nombreClub)) &&
-              detalleNorm.includes(normalizarTexto(comp)) &&
-              detalleNorm.includes(cond)
-            ) {
-              if (detalleNorm.includes("victoria")) victorias++;
-              else if (detalleNorm.includes("empate")) empates++;
-              else if (detalleNorm.includes("derrota")) derrotas++;
-            }
-          });
+    condiciones.forEach(cond => {
+      let victorias = 0, empates = 0, derrotas = 0;
+      const condRegex = new RegExp(`-${cond}-`, "i");
 
-          if (victorias + empates + derrotas > 0) {
-            tieneDatos = true;
-            compHTML += `<p><b>${cond.charAt(0).toUpperCase() + cond.slice(1)}:</b> ✅ ${victorias} | 🤝 ${empates} | ❌ ${derrotas}</p>`;
-          }
-        });
+      Encuentros_Huracan.forEach(p => {
+        if (!p.detalle) return;
+        const detalleNorm = normalizarTexto(p.detalle);
 
-        compHTML += `</div>`;
-        if (tieneDatos) html += compHTML;
+        if (
+          detalleNorm.includes(nombreNorm) &&
+          detalleNorm.includes(compNorm) &&
+          condRegex.test(detalleNorm)
+        ) {
+          if (detalleNorm.includes("victoria")) victorias++;
+          else if (detalleNorm.includes("empate")) empates++;
+          else if (detalleNorm.includes("derrota")) derrotas++;
+        }
       });
 
-      return html || "<p>Sin datos disponibles</p>";
-    }
+      if (victorias + empates + derrotas > 0) {
+        tieneDatos = true;
+        compHTML += `<p><b>${cond.charAt(0).toUpperCase() + cond.slice(1)}:</b> ✅ ${victorias} | 🤝 ${empates} | ❌ ${derrotas}</p>`;
+      }
+    });
+
+    compHTML += `</div>`;
+    if (tieneDatos) html += compHTML;
+  });
+
+  return html || "<p>Sin datos disponibles</p>";
+}
   </script>
 </body>
 </html>
