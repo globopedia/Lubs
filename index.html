@@ -115,7 +115,8 @@ function generarEstadisticas(nombreClub) {
     "Nacional B",
     "Amistoso"
   ];
-  const condiciones = ["local", "neutral", "visitante"];
+  const condiciones = ["-local-", "-neutral-", "-visitante-"];
+  const resultados = ["victoria", "empate", "derrota"];
   let html = "";
 
   const nombreNorm = normalizarTexto(nombreClub);
@@ -127,26 +128,33 @@ function generarEstadisticas(nombreClub) {
 
     condiciones.forEach(cond => {
       let victorias = 0, empates = 0, derrotas = 0;
-      const condRegex = new RegExp(`-${cond}-`, "i");
+      const condNorm = normalizarTexto(cond);
 
-      Encuentros_Huracan.forEach(p => {
-        if (!p.detalle) return;
-        const detalleNorm = normalizarTexto(p.detalle);
+      resultados.forEach(res => {
+        const resNorm = normalizarTexto(res);
 
-        if (
-          detalleNorm.includes(nombreNorm) &&
-          detalleNorm.includes(compNorm) &&
-          condRegex.test(detalleNorm)
-        ) {
-          if (detalleNorm.includes("victoria")) victorias++;
-          else if (detalleNorm.includes("empate")) empates++;
-          else if (detalleNorm.includes("derrota")) derrotas++;
-        }
+        Encuentros_Huracan.forEach(p => {
+          if (!p.detalle) return;
+          const detalleNorm = normalizarTexto(p.detalle);
+
+          // Intersección: club + competencia + condición + resultado
+          if (
+            detalleNorm.includes(nombreNorm) &&
+            detalleNorm.includes(compNorm) &&
+            detalleNorm.includes(condNorm) &&
+            detalleNorm.includes(resNorm)
+          ) {
+            if (res === "victoria") victorias++;
+            if (res === "empate") empates++;
+            if (res === "derrota") derrotas++;
+          }
+        });
       });
 
       if (victorias + empates + derrotas > 0) {
         tieneDatos = true;
-        compHTML += `<p><b>${cond.charAt(0).toUpperCase() + cond.slice(1)}:</b> ✅ ${victorias} | 🤝 ${empates} | ❌ ${derrotas}</p>`;
+        const condLabel = cond.replace(/-/g, "").charAt(0).toUpperCase() + cond.replace(/-/g, "").slice(1);
+        compHTML += `<p><b>${condLabel}:</b> ✅ ${victorias} | 🤝 ${empates} | ❌ ${derrotas}</p>`;
       }
     });
 
