@@ -102,49 +102,72 @@
       return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
-    function generarEstadisticas(nombreClub) {
-      const competencias = [
-        "Copa Libertadores",
-        "Copa Sudamericana",
-        "Campeonato",
-        "Copa Argentina",
-        "Copa Superliga",
-        "Copa Maradona",
-        "Supercopa",
-        "Nacional B",
-        "Amistoso"
-      ];
+function generarEstadisticas(nombreClub) {
+  const competencias = [
+    "Copa Libertadores",
+    "Copa Sudamericana",
+    "Campeonato",
+    "Copa Argentina",
+    "Copa Superliga",
+    "Copa Maradona",
+    "Supercopa",
+    "Nacional B",
+    "Amistoso"
+  ];
 
-      let html = "";
+  const condiciones = ["-local-", "-neutral-", "-visitante-"];
+  const resultados = ["Victoria", "Empate", "Derrota"];
 
-      competencias.forEach(comp => {
-        let victorias = 0, empates = 0, derrotas = 0;
+  let html = "";
 
-        Encuentros_Huracan.forEach(p => {
-          if (!p.detalle) return;
+  competencias.forEach(comp => {
+    let compHTML = "";
+
+    condiciones.forEach((cond, idx) => {
+      let victorias = 0, empates = 0, derrotas = 0;
+
+      resultados.forEach(res => {
+        const count = Encuentros_Huracan.filter(p => {
+          if (!p.detalle) return false;
           const detalleNorm = normalizarTexto(p.detalle);
-          if (
-            detalleNorm.includes(normalizarTexto(nombreClub)) &&
-            detalleNorm.includes(normalizarTexto(comp))
-          ) {
-            if (detalleNorm.includes("victoria")) victorias++;
-            else if (detalleNorm.includes("empate")) empates++;
-            else if (detalleNorm.includes("derrota")) derrotas++;
-          }
-        });
+          const filtros = [
+            normalizarTexto(nombreClub),
+            normalizarTexto(comp),
+            normalizarTexto(cond),
+            normalizarTexto(res)
+          ];
+          return filtros.every(f => detalleNorm.includes(f));
+        }).length;
 
-        if (victorias + empates + derrotas > 0) {
-          html += `<div class="stat-group">
-                     <div class="stat-title">🏆 ${comp}</div>
-                     <p>✅ Victorias: ${victorias}</p>
-                     <p>🤝 Empates: ${empates}</p>
-                     <p>❌ Derrotas: ${derrotas}</p>
-                   </div>`;
-        }
+        if (res === "Victoria") victorias = count;
+        if (res === "Empate") empates = count;
+        if (res === "Derrota") derrotas = count;
       });
 
-      return html || "<p>Sin datos disponibles</p>";
+      if (victorias + empates + derrotas > 0) {
+        let bloque = `<div class="stat-title">📍 ${cond.replace(/-/g, "").charAt(0).toUpperCase() + cond.replace(/-/g, "").slice(1)}</div><ul>`;
+        if (victorias > 0) bloque += `<li>✅ Victorias: ${victorias}</li>`;
+        if (empates > 0) bloque += `<li>🤝 Empates: ${empates}</li>`;
+        if (derrotas > 0) bloque += `<li>❌ Derrotas: ${derrotas}</li>`;
+        bloque += `</ul>`;
+        compHTML += bloque;
+
+        if (idx < condiciones.length - 1) {
+          compHTML += `<hr style="border:none;border-top:1px solid #FF0000; margin:8px 0;">`;
+        }
+      }
+    });
+
+    if (compHTML) {
+      html += `<div class="stat-group">
+                 <div class="stat-title">🏆 ${comp}</div>
+                 ${compHTML}
+               </div>`;
     }
+  });
+
+  return html || "<p>Sin datos disponibles</p>";
+}
   </script>
 </body>
 </html>
