@@ -129,14 +129,21 @@ function generarEstadisticas(nombreClub) {
       resultados.forEach(res => {
         const count = Encuentros_Huracan.filter(p => {
           if (!p.detalle) return false;
+
           const detalleNorm = normalizarTexto(p.detalle);
-          const filtros = [
-            normalizarTexto(nombreClub),
-            normalizarTexto(comp),
-            normalizarTexto(cond),
-            normalizarTexto(res)
-          ];
-          return filtros.every(f => detalleNorm.includes(f));
+
+          // Expresión regular para la condición, tolerando punto, espacio o etiqueta después
+          const condRegex = new RegExp(
+            normalizarTexto(cond).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "(\\.|\\s|<|$)"
+          );
+
+          const filtrosOK =
+            detalleNorm.includes(normalizarTexto(nombreClub)) &&
+            detalleNorm.includes(normalizarTexto(comp)) &&
+            condRegex.test(detalleNorm) &&
+            detalleNorm.includes(normalizarTexto(res));
+
+          return filtrosOK;
         }).length;
 
         if (res === "Victoria") victorias = count;
@@ -168,6 +175,6 @@ function generarEstadisticas(nombreClub) {
 
   return html || "<p>Sin datos disponibles</p>";
 }
-  </script>
+</script>
 </body>
 </html>
