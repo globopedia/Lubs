@@ -36,6 +36,11 @@
     let clubes = [];
     let Encuentros_Huracan = [];
 
+    // Función para normalizar texto (sin tildes, minúsculas)
+    function normalizar(texto) {
+      return (texto || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
     Promise.all([
       fetch(clubesURL).then(r => r.text()),
       fetch(partidosURL).then(r => r.text())
@@ -55,7 +60,10 @@
       }));
 
       Encuentros_Huracan = Papa.parse(csvEncuentros_Huracan, { header: true, skipEmptyLines: true }).data.map(p => ({
-        detalle: p.detalle || p.Detalle || Object.values(p)[0] || ""
+        club: p.Club ? p.Club.trim() : "",
+        torneo: p.Torneo ? p.Torneo.trim() : "",
+        condicion: p.Condicion ? p.Condicion.trim() : "",
+        resultado: p.Resultado ? p.Resultado.trim() : ""
       }));
 
       llenarSelectClubes();
@@ -98,89 +106,66 @@
       `;
     }
 
-    function normalizarTexto(texto) {
-      return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    }
+    function generarEstadisticas(nombreClub) {
+      const torneos = [
+        "Copa Libertadores",
+        "Copa Sudamericana",
+        "Campeonato",
+        "Copa Argentina",
+        "Copa Superliga",
+        "Copa Maradona",
+        "Supercopa",
+        "Nacional B",
+        "Amistoso"
+      ];
+      const condiciones = ["Local", "Neutral", "Visitante"];
+      const resultados = ["Victoria", "Empate", "Derrota"];
 
-function limpiarTextoHTML(texto) {
-  return normalizarTexto(
-    texto.replace(/<[^>]*>/g, " ") // Elimina etiquetas HTML
-  ).replace(/\s+/g, " ").trim();   // Espacios uniformes
-}
+      let html = "";
 
-function generarEstadisticas(nombreClub) {
-  const competencias = [
-    "Copa Libertadores",
-    "Copa Sudamericana",
-    "Campeonato",
-    "Copa Argentina",
-    "Copa Superliga",
-    "Copa Maradona",
-    "Supercopa",
-    "Nacional B",
-    "Amistoso"
-  ];
+      torneos.forEach(tor => {
+        let torHTML = "";
 
-  const condiciones = ["-local-", "-neutral-", "-visitante-"];
-  const resultados = ["Victoria", "Empate", "Derrota"];
+        condiciones.forEach((cond, idx) => {
+          let victorias = 0, empates = 0, derrotas = 0;
 
-  let html = "";
+          resultados.forEach(res => {
+            const count = Encuentros_Huracan.filter(p =>
+              normalizar(p.club).includes(normalizar(nombreClub)) &&
+              normalizar(p.torneo).includes(normalizar(tor)) &&
+              normalizar(p.condicion) === normalizar(cond) &&
+              normalizar(p.resultado) === normalizar(res)
+            ).length;
 
-  competencias.forEach(comp => {
-    let compHTML = "";
+            if (res === "Victoria") victorias = count;
+            if (res === "Empate") empates = count;
+            if (res === "Derrota") derrotas = count;
+          });
 
-    condiciones.forEach((cond, idx) => {
-      let victorias = 0, empates = 0, derrotas = 0;
+          if (victorias + empates + derrotas > 0) {
+            let bloque = `<div class="stat-title">📍 ${cond}</div><ul>`;
+            if (victorias > 0) bloque += `<li>✅ Victorias: ${victorias}</li>`;
+            if (empates > 0) bloque += `<li>🤝 Empates: ${empates}</li>`;
+            if (derrotas > 0) bloque += `<li>❌ Derrotas: ${derrotas}</li>`;
+            bloque += `</ul>`;
+            torHTML += bloque;
 
-      resultados.forEach(res => {
-        const count = Encuentros_Huracan.filter(p => {
-          if (!p.detalle) return false;
+            if (idx < condiciones.length - 1) {
+              torHTML += `<hr style="border:none;border-top:1px solid #FF0000; margin:8px 0;">`;
+            }
+          }
+        });
 
-          const detalleNorm = limpiarTextoHTML(p.detalle);
-
-          const compRegex = new RegExp("\\b" + normalizarTexto(comp) + "\\b");
-          const condRegex = new RegExp(
-            normalizarTexto(cond).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "($|\\W)"
-          );
-          const resRegex = new RegExp("\\b" + normalizarTexto(res) + "\\b");
-
-          return (
-            detalleNorm.includes(normalizarTexto(nombreClub)) &&
-            compRegex.test(detalleNorm) &&
-            condRegex.test(detalleNorm) &&
-            resRegex.test(detalleNorm)
-          );
-        }).length;
-
-        if (res === "Victoria") victorias = count;
-        if (res === "Empate") empates = count;
-        if (res === "Derrota") derrotas = count;
+        if (torHTML) {
+          html += `<div class="stat-group">
+                     <div class="stat-title">🏆 ${tor}</div>
+                     ${torHTML}
+                   </div>`;
+        }
       });
 
-      if (victorias + empates + derrotas > 0) {
-        let bloque = `<div class="stat-title">📍 ${cond.replace(/-/g, "").charAt(0).toUpperCase() + cond.replace(/-/g, "").slice(1)}</div><ul>`;
-        if (victorias > 0) bloque += `<li>✅ Victorias: ${victorias}</li>`;
-        if (empates > 0) bloque += `<li>🤝 Empates: ${empates}</li>`;
-        if (derrotas > 0) bloque += `<li>❌ Derrotas: ${derrotas}</li>`;
-        bloque += `</ul>`;
-        compHTML += bloque;
-
-        if (idx < condiciones.length - 1) {
-          compHTML += `<hr style="border:none;border-top:1px solid #FF0000; margin:8px 0;">`;
-        }
-      }
-    });
-
-    if (compHTML) {
-      html += `<div class="stat-group">
-                 <div class="stat-title">🏆 ${comp}</div>
-                 ${compHTML}
-               </div>`;
+      return html || "<p>Sin datos disponibles</p>";
     }
-  });
-
-  return html || "<p>Sin datos disponibles</p>";
-}
-</script>
+  </script>
 </body>
 </html>
