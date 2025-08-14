@@ -14,7 +14,7 @@
     .club-card { border: 3px solid #FF0000; border-radius: 20px; padding: 20px; max-width: 700px; margin: 0 auto; background: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
     .club-header { display: flex; align-items: center; gap: 15px; border-bottom: 2px solid #FF0000; padding-bottom: 10px; margin-bottom: 10px; }
     .club-header img { width: 70px; height: 70px; object-fit: contain; }
-    h2 { margin: 0; color: #FF0000; font-size: 28px; }
+    h2 { margin: 0; color: #FF0000; font-size: 22px; }
     .stats { margin-top: 20px; }
     .stat-group { margin-bottom: 20px; padding: 10px; border: 1px solid #FF0000; border-radius: 12px; background: #fff5f5; }
     .stat-title { font-weight: bold; color: #FF0000; margin-bottom: 5px; }
@@ -31,8 +31,8 @@
   <div id="clubInfo" class="club-card" style="display:none;"></div>
 
   <script>
-    const clubesURL = "https://globopedia.github.io/Rivales-Huracan/clubes.csv";
-    const partidosURL = "https://globopedia.github.io/Rivales-Huracan/Encuentros_Huracan.csv";
+    const clubesURL = "https://globopedia.github.io/Rivales-Huracan/clubes.csv?v=" + new Date().getTime();
+    const partidosURL = "https://globopedia.github.io/buscador-partidos/Encuentros_Huracan.csv";
     let clubes = [];
     let Encuentros_Huracan = [];
 
@@ -42,26 +42,21 @@
     ]).then(([csvClubes, csvEncuentros_Huracan]) => {
       clubes = Papa.parse(csvClubes, { header: true, skipEmptyLines: true }).data.map(c => ({
         id: c.id?.trim(),
-        nombre: c.Nombre?.trim() || c.nombre?.trim(),
-        apodo: c.Apodo || c.apodo || "",
+        club: c.Club?.trim() || c.club?.trim(),
+        nombre: c.Nombre || c.nombre || "",
         fundacion: c.Fundacion || c.fundacion || "",
         direccion: c.Direccion || c.direccion || "",
+        web: c.Web || c.web || "",
+        colores: c.Colores || c.colores || "",
         titulos: c.Titulos || c.titulos || "",
         estadio: c.Estadio || c.estadio || "",
-        dir_estadio: c["Direccion Estadio"] || c["dir_estadio"] || "",
-        inauguracion: c.Inauguracion || c.inauguracion || "",
-        capacidad: c.Capacidad || c.capacidad || "",
-        ubicaciones_anteriores: c["Ubicaciones anteriores"] || c["ubicaciones_anteriores"] || "",
-        historia: c.Historia || c.historia || "",
+        curiosidades: c.Curiosidades || c.curiosidades || "",
         escudo: c.Escudo || c.escudo || ""
       }));
 
       Encuentros_Huracan = Papa.parse(csvEncuentros_Huracan, { header: true, skipEmptyLines: true }).data.map(p => ({
         detalle: p.detalle || p.Detalle || Object.values(p)[0] || ""
       }));
-
-      console.log("Clubes cargados:", clubes);
-      console.log("Encuentros cargados:", Encuentros_Huracan);
 
       llenarSelectClubes();
     });
@@ -70,10 +65,10 @@
       const select = document.getElementById("clubSelect");
       select.innerHTML = `<option value="">-- Seleccionar --</option>`;
       clubes.forEach(club => {
-        if (club.id && club.nombre) {
+        if (club.id && club.club) {
           const opt = document.createElement("option");
           opt.value = club.id;
-          opt.textContent = club.nombre;
+          opt.textContent = club.club;
           select.appendChild(opt);
         }
       });
@@ -92,44 +87,62 @@
           <img src="${club.escudo}" alt="escudo" />
           <h2>${club.nombre}</h2>
         </div>
-        <p><b>Apodo:</b> ${club.apodo}</p>
         <p><b>Fundación:</b> ${club.fundacion}</p>
         <p><b>Dirección:</b> ${club.direccion}</p>
+        <p><b>Web:</b> ${club.web}</p>
+        <p><b>Colores:</b> ${club.colores}</p>
         <p><b>Títulos:</b> ${club.titulos}</p>
         <p><b>Estadio:</b> ${club.estadio}</p>
-        <p><b>Dirección Estadio:</b> ${club.dir_estadio}</p>
-        <p><b>Inauguración:</b> ${club.inauguracion}</p>
-        <p><b>Capacidad:</b> ${club.capacidad}</p>
-        <p><b>Ubicaciones anteriores:</b> ${club.ubicaciones_anteriores}</p>
-        <p><b>Historia:</b> ${club.historia}</p>
-        <div class="stats"><h3 style="color:#FF0000;">📊 Estadísticas</h3>${generarEstadisticas(club.nombre.trim())}</div>
+        <p><b>Curiosidades:</b> ${club.curiosidades}</p>
+        <div class="stats"><h3 style="color:#FF0000;">📊 Estadísticas</h3>${generarEstadisticas(club.club.trim())}</div>
       `;
     }
 
+    function normalizarTexto(texto) {
+      return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
     function generarEstadisticas(nombreClub) {
-      const competencias = ["Campeonato", "Copa Argentina", "Supercopa", "Copa Superliga", "Copa Maradona", "Copa Libertadores", "Copa Sudamericana", "Amistoso"];
-      const condiciones = ["local", "visitante", "neutral"];
-      const resultados = ["victoria", "empate", "derrota"];
+      const competencias = [
+        "Copa Libertadores",
+        "Copa Sudamericana",
+        "Campeonato",
+        "Copa Argentina",
+        "Copa Superliga",
+        "Copa Maradona",
+        "Supercopa",
+        "Nacional B",
+        "Amistoso"
+      ];
 
       let html = "";
+
       competencias.forEach(comp => {
-        let compHTML = "";
-        condiciones.forEach(cond => {
-          let linea = "";
-          resultados.forEach(res => {
-            const total = Encuentros_Huracan.filter(p =>
-              p.detalle &&
-              p.detalle.toLowerCase().includes(nombreClub.toLowerCase()) &&
-              p.detalle.toLowerCase().includes(comp.toLowerCase()) &&
-              p.detalle.toLowerCase().includes(cond.toLowerCase()) &&
-              p.detalle.toLowerCase().includes(res.toLowerCase())
-            ).length;
-            if (total > 0) linea += `${total} ${res}${total>1?'s':''} | `;
-          });
-          if (linea) compHTML += `<p>✅ ${cond}: ${linea.slice(0, -3)}</p>`;
+        let victorias = 0, empates = 0, derrotas = 0;
+
+        Encuentros_Huracan.forEach(p => {
+          if (!p.detalle) return;
+          const detalleNorm = normalizarTexto(p.detalle);
+          if (
+            detalleNorm.includes(normalizarTexto(nombreClub)) &&
+            detalleNorm.includes(normalizarTexto(comp))
+          ) {
+            if (detalleNorm.includes("victoria")) victorias++;
+            else if (detalleNorm.includes("empate")) empates++;
+            else if (detalleNorm.includes("derrota")) derrotas++;
+          }
         });
-        if (compHTML) html += `<div class="stat-group"><div class="stat-title">🏆 ${comp}</div>${compHTML}</div>`;
+
+        if (victorias + empates + derrotas > 0) {
+          html += `<div class="stat-group">
+                     <div class="stat-title">🏆 ${comp}</div>
+                     <p>✅ Victorias: ${victorias}</p>
+                     <p>🤝 Empates: ${empates}</p>
+                     <p>❌ Derrotas: ${derrotas}</p>
+                   </div>`;
+        }
       });
+
       return html || "<p>Sin datos disponibles</p>";
     }
   </script>
