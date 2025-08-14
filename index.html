@@ -102,6 +102,12 @@
       return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
+function limpiarTextoHTML(texto) {
+  return normalizarTexto(
+    texto.replace(/<[^>]*>/g, " ") // Elimina etiquetas HTML
+  ).replace(/\s+/g, " ").trim();   // Espacios uniformes
+}
+
 function generarEstadisticas(nombreClub) {
   const competencias = [
     "Copa Libertadores",
@@ -130,20 +136,20 @@ function generarEstadisticas(nombreClub) {
         const count = Encuentros_Huracan.filter(p => {
           if (!p.detalle) return false;
 
-          const detalleNorm = normalizarTexto(p.detalle);
+          const detalleNorm = limpiarTextoHTML(p.detalle);
 
-          // Expresión regular para la condición, tolerando punto, espacio o etiqueta después
+          const compRegex = new RegExp("\\b" + normalizarTexto(comp) + "\\b");
           const condRegex = new RegExp(
-            normalizarTexto(cond).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "(\\.|\\s|<|$)"
+            normalizarTexto(cond).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "($|\\W)"
           );
+          const resRegex = new RegExp("\\b" + normalizarTexto(res) + "\\b");
 
-          const filtrosOK =
+          return (
             detalleNorm.includes(normalizarTexto(nombreClub)) &&
-            detalleNorm.includes(normalizarTexto(comp)) &&
+            compRegex.test(detalleNorm) &&
             condRegex.test(detalleNorm) &&
-            detalleNorm.includes(normalizarTexto(res));
-
-          return filtrosOK;
+            resRegex.test(detalleNorm)
+          );
         }).length;
 
         if (res === "Victoria") victorias = count;
