@@ -60,7 +60,7 @@
       }));
 
       Encuentros_Huracan = Papa.parse(csvEncuentros_Huracan, { header: true, skipEmptyLines: true }).data.map(p => ({
-        club: p.Club ? p.Club.trim() : "",
+        partido: p.Partido ? p.Partido.trim() : "",
         torneo: p.Torneo ? p.Torneo.trim() : "",
         condicion: p.Condicion ? p.Condicion.trim() : "",
         resultado: p.Resultado ? p.Resultado.trim() : ""
@@ -131,7 +131,7 @@
 
           resultados.forEach(res => {
             const count = Encuentros_Huracan.filter(p =>
-              normalizar(p.club).includes(normalizar(nombreClub)) &&
+              normalizar(p.partido).includes(normalizar(nombreClub)) &&
               normalizar(p.torneo).includes(normalizar(tor)) &&
               normalizar(p.condicion) === normalizar(cond) &&
               normalizar(p.resultado) === normalizar(res)
