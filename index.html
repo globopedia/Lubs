@@ -54,12 +54,9 @@
         escudo: c.Escudo || c.escudo || ""
       }));
 
-      // Guardamos todas las columnas que necesitamos
+      // Solo guardamos la columna "detalle"
       Encuentros_Huracan = Papa.parse(csvEncuentros_Huracan, { header: true, skipEmptyLines: true }).data.map(p => ({
-        detalle: p.detalle || p.Detalle || "",
-        competencia: p.competencia || p.Competencia || "",
-        condicion: p.condicion || p.Condicion || "",
-        resultado: p.resultado || p.Resultado || ""
+        detalle: p.detalle || p.Detalle || Object.values(p)[0] || ""
       }));
 
       llenarSelectClubes();
@@ -118,8 +115,7 @@
         "Nacional B",
         "Amistoso"
       ];
-
-      const condiciones = ["Local", "Visitante", "Neutral"];
+      const condiciones = ["local", "visitante", "neutral"];
       let html = "";
 
       competencias.forEach(comp => {
@@ -130,20 +126,21 @@
           let victorias = 0, empates = 0, derrotas = 0;
 
           Encuentros_Huracan.forEach(p => {
+            const detalleNorm = normalizarTexto(p.detalle);
             if (
-              normalizarTexto(p.competencia) === normalizarTexto(comp) &&
-              normalizarTexto(p.condicion) === normalizarTexto(cond) &&
-              normalizarTexto(p.detalle).includes(normalizarTexto(nombreClub))
+              detalleNorm.includes(normalizarTexto(nombreClub)) &&
+              detalleNorm.includes(normalizarTexto(comp)) &&
+              detalleNorm.includes(cond)
             ) {
-              if (normalizarTexto(p.resultado) === "victoria") victorias++;
-              else if (normalizarTexto(p.resultado) === "empate") empates++;
-              else if (normalizarTexto(p.resultado) === "derrota") derrotas++;
+              if (detalleNorm.includes("victoria")) victorias++;
+              else if (detalleNorm.includes("empate")) empates++;
+              else if (detalleNorm.includes("derrota")) derrotas++;
             }
           });
 
           if (victorias + empates + derrotas > 0) {
             tieneDatos = true;
-            compHTML += `<p><b>${cond}:</b> ✅ ${victorias} | 🤝 ${empates} | ❌ ${derrotas}</p>`;
+            compHTML += `<p><b>${cond.charAt(0).toUpperCase() + cond.slice(1)}:</b> ✅ ${victorias} | 🤝 ${empates} | ❌ ${derrotas}</p>`;
           }
         });
 
