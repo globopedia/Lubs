@@ -33,17 +33,12 @@
   <div id="clubInfo" class="club-card" style="display:none;"></div>
 
   <script>
-    // ---- CONFIG: URLs de los CSV (columnados) ----
     const clubesURL   = "https://globopedia.github.io/Rivales-Huracan/clubes.csv?v=" + Date.now();
     const partidosURL = "https://globopedia.github.io/buscador-partidos/Encuentros_Huracan.csv?v=" + Date.now();
-
-    // Esperamos columnas en Encuentros_Huracan.csv: Partido, Torneo, Condicion, Resultado
-    // En clubes.csv: id, Club, Nombre, Fundacion, Direccion, Web, Colores, Titulos, Estadio, Curiosidades, Escudo
 
     let clubes = [];
     let encuentros = [];
 
-    // ---- Utils ----
     const norm = (t) =>
       (t || "")
         .toString()
@@ -57,7 +52,12 @@
 
     const cap = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
 
-    // Bucketear torneo a “competencia” amplia
+    // Extraer rival de la columna "Partido"
+    function getRival(partido) {
+      const match = partido.match(/vs\s+([^<]+)/i);
+      return match ? match[1].trim() : "";
+    }
+
     function bucketCompetencia(torneo) {
       const t = norm(torneo);
       if (t.includes("libertadores")) return "Copa Libertadores";
@@ -69,7 +69,6 @@
       if (t.includes("nacional b") || t.includes("b nacional") || t.includes("nac b")) return "Nacional B";
       if (t.includes("campeonato") || t.includes("liga") || t.includes("torneo") || t.includes("primera")) return "Campeonato";
       if (t.includes("amistos")) return "Amistoso";
-      // Si no encaja en nada de lo anterior:
       return "Otros";
     }
 
@@ -80,7 +79,6 @@
     const CONDICIONES = ["Local","Neutral","Visitante"];
     const RESULTADOS  = ["Victoria","Empate","Derrota"];
 
-    // ---- Carga CSVs ----
     Promise.all([ fetch(clubesURL).then(r=>r.text()), fetch(partidosURL).then(r=>r.text()) ])
       .then(([csvClubes, csvPartidos]) => {
         clubes = Papa.parse(csvClubes, { header:true, skipEmptyLines:true }).data.map(c => ({
@@ -101,7 +99,8 @@
           Partido:   (p.Partido   ?? "").toString().trim(),
           Torneo:    (p.Torneo    ?? "").toString().trim(),
           Condicion: (p.Condicion ?? "").toString().trim(),
-          Resultado: (p.Resultado ?? "").toString().trim()
+          Resultado: (p.Resultado ?? "").toString().trim(),
+          Rival: getRival(p.Partido ?? "")
         }));
 
         llenarSelectClubes();
@@ -111,7 +110,6 @@
         alert("No pude cargar los CSV. Revisá las URLs o el formato.");
       });
 
-    // ---- UI ----
     function llenarSelectClubes() {
       const sel = document.getElementById("clubSelect");
       sel.innerHTML = `<option value="">-- Seleccionar --</option>`;
@@ -152,19 +150,15 @@
       `;
     }
 
-    // ---- Core: agrupar y renderizar ----
     function renderEstadisticas(nombreClub) {
       const clubNorm = norm(nombreClub);
+      const delClub = encuentros.filter(p => norm(p.Rival) === clubNorm);
 
-      // Filtrar encuentros del club (comparando contra columna Partido)
-      const delClub = encuentros.filter(p => norm(p.Partido).includes(clubNorm));
-
-      // Armar estructura: competencia -> condición -> resultado -> count
       const agg = {};
       for (const e of delClub) {
         const comp = bucketCompetencia(e.Torneo);
-        const cond = cap(norm(e.Condicion));  // fuerza a Local/Neutral/Visitante
-        const res  = cap(norm(e.Resultado));  // fuerza a Victoria/Empate/Derrota
+        const cond = cap(norm(e.Condicion));
+        const res  = cap(norm(e.Resultado));
 
         if (!agg[comp]) agg[comp] = {};
         if (!agg[comp][cond]) agg[comp][cond] = { Victoria:0, Empate:0, Derrota:0 };
@@ -174,7 +168,6 @@
         }
       }
 
-      // Render
       let html = "";
       for (const comp of ORDEN_COMPETENCIAS) {
         if (!agg[comp]) continue;
