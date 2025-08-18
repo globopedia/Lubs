@@ -42,21 +42,11 @@
     const norm = (t) =>
       (t || "")
         .toString()
-        .replace(/<br\s*\/?>/gi, " ")
-        .replace(/<[^>]*>/g, " ")
-        .replace(/–/g, "-")
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .replace(/\s+/g, " ")
         .trim()
         .toLowerCase();
 
     const cap = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
-
-    // Extraer rival de la columna "Club"
-    function getRival(club) {
-      const match = club.match(/vs\s+([^<]+)/i);
-      return match ? match[1].trim() : "";
-    }
 
     function bucketCompetencia(torneo) {
       const t = norm(torneo);
@@ -96,11 +86,10 @@
         }));
 
         encuentros = Papa.parse(csvPartidos, { header:true, skipEmptyLines:true }).data.map(p => ({
-          Club:   (p.Club   ?? "").toString().trim(),
-          Torneo:    (p.Torneo    ?? "").toString().trim(),
-          Condicion: (p.Condicion ?? "").toString().trim(),
-          Resultado: (p.Resultado ?? "").toString().trim(),
-          Rival: getRival(p.Club ?? "")
+          Club:      (p.Club      ?? "").trim(),
+          Torneo:    (p.Torneo    ?? "").trim(),
+          Condicion: (p.Condicion ?? "").trim(),
+          Resultado: (p.Resultado ?? "").trim()
         }));
 
         llenarSelectClubes();
@@ -152,7 +141,7 @@
 
     function renderEstadisticas(nombreClub) {
       const clubNorm = norm(nombreClub);
-      const delClub = encuentros.filter(p => norm(p.Rival) === clubNorm);
+      const delClub = encuentros.filter(p => norm(p.Club) === clubNorm);
 
       const agg = {};
       for (const e of delClub) {
