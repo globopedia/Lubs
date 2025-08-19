@@ -88,7 +88,7 @@
         encuentros = Papa.parse(csvPartidos, { header:true, skipEmptyLines:true }).data.map(p => ({
           Club:      (p.Club      ?? "").trim(),
           Torneo:    (p.Torneo    ?? "").trim(),
-          Condicion: (p.Condicion ?? "").trim(),
+          Condición: (p.Condición ?? "").trim(),
           Resultado: (p.Resultado ?? "").trim()
         }));
 
@@ -146,7 +146,7 @@
       const agg = {};
       for (const e of delClub) {
         const comp = bucketCompetencia(e.Torneo);
-        const cond = cap(norm(e.Condicion));
+        const cond = cap(norm(e.Condición));
         const res  = cap(norm(e.Resultado));
 
         if (!agg[comp]) agg[comp] = {};
