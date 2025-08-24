@@ -67,7 +67,7 @@
       "Copa Superliga","Copa Maradona","Supercopa","Nacional B","Amistoso","Otros"
     ];
     const CONDICIONES = ["Local","Neutral","Visitante"];
-    const RESULTADOS  = ["Victoria","Empate","Derrota"];
+    const SITUACIONES  = ["Victoria","Empate","Derrota"];
 
     Promise.all([ fetch(clubesURL).then(r=>r.text()), fetch(partidosURL).then(r=>r.text()) ])
       .then(([csvClubes, csvPartidos]) => {
@@ -89,7 +89,7 @@
           Club:      (p.Club      ?? "").trim(),
           Torneo:    (p.Torneo    ?? "").trim(),
           Condición: (p.Condición ?? "").trim(),
-          Resultado: (p.Resultado ?? "").trim()
+          Situación: (p.Situación ?? "").trim()
         }));
 
         llenarSelectClubes();
@@ -147,13 +147,13 @@
       for (const e of delClub) {
         const comp = bucketCompetencia(e.Torneo);
         const cond = cap(norm(e.Condición));
-        const res  = cap(norm(e.Resultado));
+        const sit  = cap(norm(e.Situación));
 
         if (!agg[comp]) agg[comp] = {};
         if (!agg[comp][cond]) agg[comp][cond] = { Victoria:0, Empate:0, Derrota:0 };
 
-        if (RESULTADOS.includes(res)) {
-          agg[comp][cond][res] += 1;
+        if (SITUACIONES.includes(sit)) {
+          agg[comp][cond][sit] += 1;
         }
       }
 
