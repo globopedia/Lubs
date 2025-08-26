@@ -104,12 +104,12 @@
     }
 
     function generarEstadisticas(nombreClub) {
-      const competencias = [...new Set(Encuentros_Huracan.map(p => p.Torneo))];
+      const torneos = [...new Set(Encuentros_Huracan.map(p => p.Torneo))];
       const condiciones = ["local", "neutral", "visitante"];
       const situaciones = ["Victoria", "Empate", "Derrota"];
       let html = "";
 
-      competencias.forEach(comp => {
+      torneos.forEach(comp => {
         let compHTML = "";
 
         condiciones.forEach(cond => {
