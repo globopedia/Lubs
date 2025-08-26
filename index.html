@@ -106,7 +106,7 @@
     function generarEstadisticas(nombreClub) {
       const torneos = [...new Set(Encuentros_Huracan.map(p => p.Torneo))];
       const condiciones = ["local", "neutral", "visitante"];
-      const situaciones = ["Victoria", "Empate", "Derrota"];
+      const situaciones = ["victoria", "empate", "derrota"];
       let html = "";
 
       torneos.forEach(comp => {
@@ -123,23 +123,23 @@
               p.Situación === sit
             ).length;
 
-            if (sit === "Victoria") victorias = count;
-            if (sit === "Empate") empates = count;
-            if (sit === "Derrota") derrotas = count;
+            if (sit === "victoria") victorias = count;
+            if (sit === "empate") empates = count;
+            if (sit === "derrota") derrotas = count;
           });
 
           if (victorias + empates + derrotas > 0) {
             let bloque = `<div class="stat-title">📍 ${cond}</div><ul>`;
-            ["Victoria","Empate","Derrota"].forEach(tipo => {
+            ["victoria","empate","derrota"].forEach(tipo => {
               const cantidad =
-                tipo==="Victoria" ? victorias : tipo==="Empate" ? empates : derrotas;
+                tipo==="victoria" ? victorias : tipo==="empate" ? empates : derrotas;
               if (cantidad > 0) {
                 bloque += `
                   <li>
                     <label>
                       <input type="checkbox" class="chkPartidos"
                              data-comp="${comp}" data-cond="${cond}" data-sit="${tipo}" data-club="${nombreClub}">
-                      ${tipo==="Victoria"?"✅":tipo==="Empate"?"🤝":"❌"} ${tipo}s: ${cantidad}
+                      ${tipo==="victoria"?"✅":tipo==="empate"?"🤝":"❌"} ${tipo}s: ${cantidad}
                     </label>
                     <div class="acordeon" style="display:none;">
                       <div class="acordeon-header">[Cerrar]</div>
