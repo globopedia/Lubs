@@ -115,7 +115,7 @@
         condiciones.forEach(cond => {
           let victorias = 0, empates = 0, derrotas = 0;
 
-          situaciones.forEach(res => {
+          situaciones.forEach(sit => {
             const count = Encuentros_Huracan.filter(p =>
               p.Club === nombreClub &&
               p.Torneo.includes(comp) &&
@@ -123,9 +123,9 @@
               p.Situación === sit
             ).length;
 
-            if (res === "Victoria") victorias = count;
-            if (res === "Empate") empates = count;
-            if (res === "Derrota") derrotas = count;
+            if (sit === "Victoria") victorias = count;
+            if (sit === "Empate") empates = count;
+            if (sit === "Derrota") derrotas = count;
           });
 
           if (victorias + empates + derrotas > 0) {
@@ -138,7 +138,7 @@
                   <li>
                     <label>
                       <input type="checkbox" class="chkPartidos"
-                             data-comp="${comp}" data-cond="${cond}" data-res="${tipo}" data-club="${nombreClub}">
+                             data-comp="${comp}" data-cond="${cond}" data-sit="${tipo}" data-club="${nombreClub}">
                       ${tipo==="Victoria"?"✅":tipo==="Empate"?"🤝":"❌"} ${tipo}s: ${cantidad}
                     </label>
                     <div class="acordeon" style="display:none;">
@@ -175,7 +175,7 @@
       if (e.target.checked) {
         const comp = e.target.dataset.comp;
         const cond = e.target.dataset.cond;
-        const res  = e.target.dataset.res;
+        const sit  = e.target.dataset.sit;
         const club = e.target.dataset.club;
 
         const partidos = Encuentros_Huracan.filter(p =>
