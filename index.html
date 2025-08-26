@@ -119,7 +119,7 @@
             const count = Encuentros_Huracan.filter(p =>
               p.Club === nombreClub &&
               p.Torneo.includes(comp) &&
-              p.Condicion === cond &&
+              p.Condición === cond &&
               p.Situación === sit
             ).length;
 
@@ -181,7 +181,7 @@
         const partidos = Encuentros_Huracan.filter(p =>
           p.Club === club &&
           p.Torneo.includes(comp) &&
-          p.Condicion === cond &&
+          p.Condición === cond &&
           p.Situación === sit
         );
 
@@ -192,7 +192,7 @@
                 <div class="partido-header">
                   <span>${p.Fecha}</span> - <b>${p.Torneo}</b>
                 </div>
-                <div><b>${p.Condicion}</b> | ${p.Situación}</div>
+                <div><b>${p.Condición}</b> | ${p.Situación}</div>
                 <div><b>Huracán:</b> ${p.Huracan}</div>
                 <div><b>${p.Club}:</b> ${p.Rival}</div>
                 <div><b>Estadio:</b> ${p.Estadio}</div>
