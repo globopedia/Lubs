@@ -99,14 +99,14 @@
         <p><b>Títulos:</b> ${club.titulos}</p>
         <p><b>Estadio:</b> ${club.estadio}</p>
         <p><b>Curiosidades:</b> ${club.curiosidades}</p>
-        <div class="stats"><h3 style="color:#FF0000;">📊 Estadísticas</h3>${generarEstadisticas(club.club)}</div>
+        <div class="stats"><h3 style="color:#FF0000;">📊 Historial</h3>${generarEstadisticas(club.club)}</div>
       `;
     }
 
     function generarEstadisticas(nombreClub) {
       const competencias = [...new Set(Encuentros_Huracan.map(p => p.Torneo))];
       const condiciones = ["local", "neutral", "visitante"];
-      const resultados = ["Victoria", "Empate", "Derrota"];
+      const situaciones = ["Victoria", "Empate", "Derrota"];
       let html = "";
 
       competencias.forEach(comp => {
@@ -115,12 +115,12 @@
         condiciones.forEach(cond => {
           let victorias = 0, empates = 0, derrotas = 0;
 
-          resultados.forEach(res => {
+          situaciones.forEach(res => {
             const count = Encuentros_Huracan.filter(p =>
               p.Club === nombreClub &&
               p.Torneo.includes(comp) &&
               p.Condicion === cond &&
-              p.Resultado === res
+              p.Situación === sit
             ).length;
 
             if (res === "Victoria") victorias = count;
@@ -182,7 +182,7 @@
           p.Club === club &&
           p.Torneo.includes(comp) &&
           p.Condicion === cond &&
-          p.Resultado === res
+          p.Situación === sit
         );
 
         if (partidos.length) {
@@ -192,7 +192,7 @@
                 <div class="partido-header">
                   <span>${p.Fecha}</span> - <b>${p.Torneo}</b>
                 </div>
-                <div><b>${p.Condicion}</b> | ${p.Resultado}</div>
+                <div><b>${p.Condicion}</b> | ${p.Situación}</div>
                 <div><b>Huracán:</b> ${p.Huracan}</div>
                 <div><b>${p.Club}:</b> ${p.Rival}</div>
                 <div><b>Estadio:</b> ${p.Estadio}</div>
