@@ -47,20 +47,22 @@
       fetch(clubesURL).then(r => r.text()),
       fetch(partidosURL).then(r => r.text())
     ]).then(([csvClubes, csvEncuentros_Huracan]) => {
-      clubes = Papa.parse(csvClubes, { header: true, skipEmptyLines: true }).data.map(c => ({
-        id: c.id?.trim(),
-        club: c.club?.trim(),
-        nombre: c.Nombre || "",
-        fundacion: c.Fundacion || "",
-        direccion: c.Direccion || "",
-        web: c.Web || "",
-        colores: c.Colores || "",
-        titulos: c.Titulos || "",
-        estadio: c.Estadio || "",
-        curiosidades: c.Curiosidades || "",
-        escudo: c.Escudo || ""
-      }));
+clubes = Papa.parse(csvClubes, { header: true, skipEmptyLines: true }).data.map(c => ({
+  id: c.id?.trim(),
+  club: c.club?.trim(),
+  nombre: c.nombre || "",
+  fundacion: c.fundacion || "",
+  direccion: c.direccion || "",
+  web: c.web || "",
+  colores: c.colores || "",
+  titulos: c.titulos || "",
+  estadio: c.estadio || "",
+  curiosidades: c.curiosidades || "",
+  escudo: c.escudo || ""
+}));
 
+  console.log("Clubes cargados:", clubes);
+      
       Encuentros_Huracan = Papa.parse(csvEncuentros_Huracan, { header: true, skipEmptyLines: true }).data;
 
       llenarSelectClubes();
