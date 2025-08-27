@@ -20,6 +20,32 @@
     .stat-title { font-weight:bold; color:#FF0000; margin-bottom:6px; }
     .hr { border:none; border-top:1px solid #FF0000; margin:8px 0; }
     .partido-card { border:1px solid #ccc; border-radius:6px; padding:6px; margin:4px 0; background:#fafafa; font-size:14px; }
+.acordeon {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin: 6px 0;
+  background: #fefefe;
+}
+
+.acordeon-header {
+  background: #eee;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: right;
+}
+
+.acordeon-body {
+  max-height: 1000px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 8px;
+}
+
+.acordeon-body.cerrado {
+  max-height: 0;
+  padding: 0 8px;
+}
   </style>
 </head>
 <body>
@@ -228,16 +254,21 @@
 
         if (partidos.length) {
           partidos.forEach(p => {
-            contenedor.innerHTML += `
-              <div class="partido-card">
-                <div><b>${p.Fecha}</b> - ${p.Torneo}</div>
-                <div><b>${p.Condición}</b> | ${p.Situación}</div>
-                <div><b>Huracán:</b> ${p.Huracan}</div>
-                <div><b>${p.Club}:</b> ${p.Rival}</div>
-                <div><b>Estadio:</b> ${p.Estadio}</div>
-                <div><b>Árbitro:</b> ${p.Arbitro}</div>
-                <div><b>Goles:</b> ${p.Goles}</div>
-              </div>`;
+contenedor.innerHTML += `
+  <div class="acordeon">
+    <div class="acordeon-header">[Ver detalles]</div>
+    <div class="acordeon-body cerrado">
+      <div class="partido-card">
+        <div><b>${p.Fecha}</b> - ${p.Torneo}</div>
+        <div><b>${p.Condición}</b> | ${p.Situación}</div>
+        <div><b>Huracán:</b> ${p.Huracan}</div>
+        <div><b>${p.Club}:</b> ${p.Rival}</div>
+        <div><b>Estadio:</b> ${p.Estadio}</div>
+        <div><b>Árbitro:</b> ${p.Arbitro}</div>
+        <div><b>Goles:</b> ${p.Goles}</div>
+      </div>
+    </div>
+  </div>`;
           });
         } else {
           contenedor.innerHTML = "<i>No hay partidos registrados</i>";
@@ -247,6 +278,14 @@
         contenedor.style.display = "none";
       }
     });
+// Toggle acordeón
+document.addEventListener("click", function(e) {
+  if (e.target.classList.contains("acordeon-header")) {
+    const body = e.target.nextElementSibling;
+    body.classList.toggle("cerrado");
+    e.target.textContent = body.classList.contains("cerrado") ? "[Ver detalles]" : "[Cerrar]";
+  }
+});
   </script>
 </body>
 </html>
