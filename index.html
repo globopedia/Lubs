@@ -49,7 +49,7 @@
     ]).then(([csvClubes, csvEncuentros_Huracan]) => {
       clubes = Papa.parse(csvClubes, { header: true, skipEmptyLines: true }).data.map(c => ({
         id: c.id?.trim(),
-        club: c.Club?.trim(),
+        club: c.club?.trim(),
         nombre: c.Nombre || "",
         fundacion: c.Fundacion || "",
         direccion: c.Direccion || "",
@@ -178,8 +178,10 @@
         const sit  = e.target.dataset.sit;
         const club = e.target.dataset.club;
 
+const club = e.target.dataset.club; // 👈 tomar el club desde el dataset
+
 const partidos = Encuentros_Huracan.filter(p =>
-  p.Club.trim().toLowerCase() === nombreClub.trim().toLowerCase() &&
+  p.Club.trim().toLowerCase() === club.trim().toLowerCase() &&
   p.Torneo.toLowerCase().includes(comp.toLowerCase()) &&
   p.Condición.trim().toLowerCase() === cond.toLowerCase() &&
   p.Situación.trim().toLowerCase() === sit.toLowerCase()
