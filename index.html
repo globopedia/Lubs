@@ -55,7 +55,7 @@
   border: 3px solid #FF0000;   /* borde rojo */
   border-radius: 12px;
   background: #fff5f5;         /* fondo claro */
-  max-width: 180px;            /* ancho fijo, se ajusta al número */
+  max-width: 80px;            /* ancho fijo, se ajusta al número */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* sombrita */
 }
 .resultado2-box {
@@ -67,7 +67,7 @@
   border: 3px solid #FF0000;   /* borde rojo */
   border-radius: 12px;
   background: #fff5f5;         /* fondo claro */
-  max-width: 180px;            /* ancho fijo, se ajusta al número */
+  max-width: 80px;            /* ancho fijo, se ajusta al número */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* sombrita */
 }
   </style>
@@ -287,8 +287,7 @@ contenedor.innerHTML += `
     <div class="acordeon-header">[Ver detalles]</div>
     <div class="acordeon-body cerrado">
       <div class="partido-card">
-        <div class="resultado1-box">${p.Resultado1}</div>
-        <div class="resultado2-box">${p.Resultado2}</div>
+        <div class="resultado1-box">${p.Resultado1}-<div class="resultado2-box">${p.Resultado2}</div></div>
         <div><b>${p.Fecha}</b> - ${p.Torneo}</div>
         <div><b>Estadio:</b> ${p.Estadio}</div>
         <div><b>Árbitro:</b> ${p.Árbitro}</div>
