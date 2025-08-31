@@ -125,7 +125,7 @@
           Árbitro:      (p.Árbitro       ?? "").trim(),
           Goles:        (p.Goles         ?? "").trim(),
           Expulsiones:  (p.Expulsiones   ?? "").trim(),
-          Observaiones: (p.Observaciones ?? "").trim()
+          Observaciones:(p.Observaciones ?? "").trim()
         }));
 
         llenarSelectClubes();
@@ -169,7 +169,7 @@
         <p><b>Estadio:</b> ${club.estadio}</p>
         <p><b>Curiosidades:</b> ${club.curiosidades}</p>
         <div class="stats">
-          <h3 style="color:#FF0000;">📊 Estadísticas</h3>
+          <h3 style="color:#FF0000;">📊 Historial</h3>
           ${renderEstadisticas(club.club)}
         </div>
       `;
