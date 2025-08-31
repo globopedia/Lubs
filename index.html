@@ -46,7 +46,19 @@
   max-height: 0;
   padding: 0 8px;
 }
-.resultado-box {
+.resultado1-box {
+  font-size: 28px;             /* bien grande */
+  font-weight: bold;
+  text-align: center;          /* centrado */
+  margin: 15px auto;
+  padding: 10px 20px;
+  border: 3px solid #FF0000;   /* borde rojo */
+  border-radius: 12px;
+  background: #fff5f5;         /* fondo claro */
+  max-width: 180px;            /* ancho fijo, se ajusta al número */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* sombrita */
+}
+.resultado2-box {
   font-size: 28px;             /* bien grande */
   font-weight: bold;
   text-align: center;          /* centrado */
@@ -130,7 +142,8 @@
           Condición:    (p.Condición     ?? "").trim(),
           Situación:    (p.Situación     ?? "").trim(),
           Fecha:        (p.Fecha         ?? "").trim(),
-          Resultado:    (p.Resultado     ?? "").trim(),
+          Resultado1:   (p.Resultado1    ?? "").trim(),
+          Resultado2:   (p.Resultado2    ?? "").trim(),
           Rival:        (p.Rival         ?? "").trim(),
           Huracán:      (p.Huracán       ?? "").trim(),
           Estadio:      (p.Estadio       ?? "").trim(),
@@ -274,7 +287,8 @@ contenedor.innerHTML += `
     <div class="acordeon-header">[Ver detalles]</div>
     <div class="acordeon-body cerrado">
       <div class="partido-card">
-        <div class="resultado-box">${p.Resultado}</div>
+        <div class="resultado1-box">${p.Resultado1}</div>
+        <div class="resultado2-box">${p.Resultado2}</div>
         <div><b>${p.Fecha}</b> - ${p.Torneo}</div>
         <div><b>Estadio:</b> ${p.Estadio}</div>
         <div><b>Árbitro:</b> ${p.Árbitro}</div>
