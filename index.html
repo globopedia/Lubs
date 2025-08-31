@@ -311,7 +311,7 @@ document.addEventListener("click", function(e) {
   if (e.target.classList.contains("acordeon-header")) {
     const body = e.target.nextElementSibling;
     body.classList.toggle("cerrado");
-    e.target.textContent = body.classList.contains("cerrado") ? "[Ver detalles]" : "[Cerrar]";
+    e.target.textContent = body.classList.contains("cerrado") ? "${p.Fecha}" : "[Cerrar]";
   }
 });
   </script>
