@@ -323,12 +323,13 @@ contenedor.innerHTML += `
       }
     });
 // Toggle acordeón
-header.addEventListener("click", (e) => {
+document.addEventListener("click", function(e) => {
   if (e.target.classList.contains("acordeon-header")) {
     const body = e.target.nextElementSibling;
     body.classList.toggle("cerrado");
-  e.target.classList.toggle("abierto"); // para que rote la flecha  }
+ e.target.classList.toggle("abierto"); // para que rote la flecha  }
 });
+
   </script>
 </body>
 </html>
