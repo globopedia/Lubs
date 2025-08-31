@@ -324,9 +324,10 @@ contenedor.innerHTML += `
     });
 // Toggle acordeón
 header.addEventListener("click", (e) => {
-  const body = e.target.nextElementSibling;
-  body.classList.toggle("cerrado");
-  e.target.classList.toggle("abierto"); // para que rote la flecha
+  if (e.target.classList.contains("acordeon-header")) {
+    const body = e.target.nextElementSibling;
+    body.classList.toggle("cerrado");
+  e.target.classList.toggle("abierto"); // para que rote la flecha  }
 });
   </script>
 </body>
