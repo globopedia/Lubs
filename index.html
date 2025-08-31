@@ -66,6 +66,22 @@
   background: #fff5f5;
   min-width: 30px;
 }
+.acordeon-header {
+  cursor: pointer;
+  position: relative;
+  padding-right: 20px; /* espacio para la flechita */
+}
+
+.acordeon-header::after {
+  content: "▾"; /* flechita hacia abajo */
+  position: absolute;
+  right: 0;
+  transition: transform 0.3s;
+}
+
+.acordeon-header.abierto::after {
+  transform: rotate(180deg); /* flechita hacia arriba cuando está abierto */
+}
   </style>
 </head>
 <body>
@@ -307,11 +323,10 @@ contenedor.innerHTML += `
       }
     });
 // Toggle acordeón
-document.addEventListener("click", function(e) {
-  if (e.target.classList.contains("acordeon-header")) {
-    const body = e.target.nextElementSibling;
-    body.classList.toggle("cerrado");
-  }
+header.addEventListener("click", (e) => {
+  const body = e.target.nextElementSibling;
+  body.classList.toggle("cerrado");
+  e.target.classList.toggle("abierto"); // para que rote la flecha
 });
   </script>
 </body>
