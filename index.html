@@ -113,16 +113,18 @@
         }));
 
         encuentros = Papa.parse(csvPartidos, { header:true, skipEmptyLines:true }).data.map(p => ({
-          Club:      (p.Club      ?? "").trim(),
-          Torneo:    (p.Torneo    ?? "").trim(),
-          Condición: (p.Condición ?? "").trim(),
-          Situación: (p.Situación ?? "").trim(),
-          Fecha:     (p.Fecha     ?? "").trim(),
-          Rival:     (p.Rival     ?? "").trim(),
-          Huracan:   (p.Huracan   ?? "").trim(),
-          Estadio:   (p.Estadio   ?? "").trim(),
-          Arbitro:   (p.Arbitro   ?? "").trim(),
-          Goles:     (p.Goles     ?? "").trim()
+          Club:         (p.Club          ?? "").trim(),
+          Torneo:       (p.Torneo        ?? "").trim(),
+          Condición:    (p.Condición     ?? "").trim(),
+          Situación:    (p.Situación     ?? "").trim(),
+          Fecha:        (p.Fecha         ?? "").trim(),
+          Rival:        (p.Rival         ?? "").trim(),
+          Huracan:      (p.Huracan       ?? "").trim(),
+          Estadio:      (p.Estadio       ?? "").trim(),
+          Arbitro:      (p.Arbitro       ?? "").trim(),
+          Goles:        (p.Goles         ?? "").trim()
+          Expulsiones:  (p.Expulsiones   ?? "").trim(),
+          Observaiones: (p.Observaciones ?? "").trim()
         }));
 
         llenarSelectClubes();
@@ -260,11 +262,13 @@ contenedor.innerHTML += `
     <div class="acordeon-body cerrado">
       <div class="partido-card">
         <div><b>${p.Fecha}</b> - ${p.Torneo}</div>
-        <div><b>Huracán:</b> ${p.Huracan}</div>
-        <div><b>${p.Club}:</b> ${p.Rival}</div>
         <div><b>Estadio:</b> ${p.Estadio}</div>
         <div><b>Árbitro:</b> ${p.Arbitro}</div>
+        <div><b>Huracán:</b> ${p.Huracan}</div>
+        <div><b>${p.Club}:</b> ${p.Rival}</div>
         <div><b>Goles:</b> ${p.Goles}</div>
+        <div><b>Expulsiones:</b> ${p.Expulsiones}</div>
+        <div><b>Observaciones:</b> ${p.Observaciones}</div>
       </div>
     </div>
   </div>`;
