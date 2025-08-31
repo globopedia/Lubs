@@ -323,7 +323,7 @@ contenedor.innerHTML += `
       }
     });
 // Toggle acordeón
-document.addEventListener("click", function(e) => {
+document.addEventListener("click", (e) => {
   if (e.target.classList.contains("acordeon-header")) {
     const body = e.target.nextElementSibling;
     body.classList.toggle("cerrado");
