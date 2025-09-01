@@ -82,6 +82,19 @@
 .acordeon-header.abierto::after {
   transform: rotate(180deg); /* flechita hacia arriba cuando está abierto */
 }
+  .resultado-con-escudo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+ .escudo-rival {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  margin-left: 8px;
+}
   </style>
 </head>
 <body>
@@ -302,6 +315,7 @@ contenedor.innerHTML += `
 <div class="resultado1-box">${p.Resultado1}</div>
 -
 <div class="resultado2-box">${p.Resultado2}</div>
+        <img class="escudo-rival" src="${getEscudo(p.Club)}" alt="${p.Club}" />
         <div><b>${p.Fecha}</b> - ${p.Torneo}</div>
         <div><b>Estadio:</b> ${p.Estadio}</div>
         <div><b>Árbitro:</b> ${p.Árbitro}</div>
@@ -331,6 +345,10 @@ document.addEventListener("click", function(e) {
  }
 });
 
+  function getEscudo(nombreClub) {
+  const c = clubes.find(cl => norm(cl.club) === norm(nombreClub));
+  return c ? c.escudo : "";
+}
   </script>
 </body>
 </html>
