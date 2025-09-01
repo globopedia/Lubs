@@ -327,7 +327,7 @@ document.addEventListener("click", function(e) {
   if (e.target.classList.contains("acordeon-header")) {
     const body = e.target.nextElementSibling;
     body.classList.toggle("cerrado");
-  }
+    e.target.classList.toggle("abierto"); // 🔹 esto hace girar la flechita  }
 });
 
   </script>
