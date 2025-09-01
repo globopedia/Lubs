@@ -70,7 +70,7 @@
   border-radius: 6px;
   background: #fff5f5;
   vertical-align: middle;  /* 🔹 alinea con el guion y el escudo */
-  min-width: 30px;
+  min-width: 26px;
 }
 .acordeon-header {
   cursor: pointer;
@@ -88,20 +88,20 @@
 .acordeon-header.abierto::after {
   transform: rotate(180deg); /* flechita hacia arriba cuando está abierto */
 }
-  .resultado-con-escudo {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
- .escudo-rival {
+.escudo-huracan,
+.escudo-rival {
   width: 50px;
   height: 50px;
   object-fit: contain;
   position: relative;
   top: 6px; /* 🔹 desplaza el escudo hacia abajo */
-}  margin-left: 8px;
+  vertical-align: middle;   /* por si caen inline */
+}
+  .resultado-con-escudo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
   </style>
 </head>
@@ -320,7 +320,9 @@ contenedor.innerHTML += `
     <div class="acordeon-header">${p.Fecha}</div>
     <div class="acordeon-body cerrado">
       <div class="partido-card">
-<div class="resultado1-box">${p.Resultado1}</div>
+<img src="https://globopedia.github.io/buscador-partidos/escudos/Huracán.png" 
+       alt="Huracán" class="escudo-huracan">
+       <div class="resultado1-box">${p.Resultado1}</div>
 <div class="resultado2-box">${p.Resultado2}</div>
         <img class="escudo-rival" src="${getEscudo(p.Club)}" alt="${p.Club}" />
         <div><b>${p.Torneo}</b>
