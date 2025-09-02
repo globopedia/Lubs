@@ -313,57 +313,31 @@
           cap(norm(p.Situación)) === sit
         );
 
-if (partidos.length) {
-  partidos.forEach(p => {
-    let bloqueHTML = "";
-
-    if ((p.Condición || "").toLowerCase() === "visitante") {
-      // Huracán visitante → primero rival, luego Huracán
-      bloqueHTML = `
-        <div class="partido-card">
-          <img class="escudo-rival" src="${getEscudo(p.Club)}" alt="${p.Club}" />
-          <div class="resultado2-box">${p.Resultado2}</div>
-          <div class="resultado1-box">${p.Resultado1}</div>
-          <img src="https://globopedia.github.io/buscador-partidos/escudos/Huracán.png" 
-               alt="Huracán" class="escudo-huracan">
-          <div><b>${p.Torneo}</b></div>
-          <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
-          <div><b>${p.Club}:</b> ${p.Rival}</div>
-          <div><b>Huracán:</b> ${p.Huracán}</div>
-          <div><b>Goles:</b> ${p.Goles}</div>
-          <div><b>Expulsiones:</b> ${p.Expulsiones}</div>
-          <div><b>Observaciones:</b> ${p.Observaciones}</div>
-        </div>
-      `;
-    } else {
-      // Huracán local o neutral → primero Huracán, luego rival
-      bloqueHTML = `
-        <div class="partido-card">
-          <img src="https://globopedia.github.io/buscador-partidos/escudos/Huracán.png" 
-               alt="Huracán" class="escudo-huracan">
-          <div class="resultado1-box">${p.Resultado1}</div>
-          <div class="resultado2-box">${p.Resultado2}</div>
-          <img class="escudo-rival" src="${getEscudo(p.Club)}" alt="${p.Club}" />
-          <div><b>${p.Torneo}</b></div>
-          <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
-          <div><b>Huracán:</b> ${p.Huracán}</div>
-          <div><b>${p.Club}:</b> ${p.Rival}</div>
-          <div><b>Goles:</b> ${p.Goles}</div>
-          <div><b>Expulsiones:</b> ${p.Expulsiones}</div>
-          <div><b>Observaciones:</b> ${p.Observaciones}</div>
-        </div>
-      `;
-    }
-
-    contenedor.innerHTML += `
-      <div class="acordeon">
-        <div class="acordeon-header">${p.Fecha}</div>
-        <div class="acordeon-body cerrado">
-          ${bloqueHTML}
-        </div>
-      </div>`;
-  });
-}
+        if (partidos.length) {
+          partidos.forEach(p => {
+contenedor.innerHTML += `
+  <div class="acordeon">
+    <div class="acordeon-header">${p.Fecha}</div>
+    <div class="acordeon-body cerrado">
+      <div class="partido-card">
+<img src="https://globopedia.github.io/buscador-partidos/escudos/Huracán.png" 
+       alt="Huracán" class="escudo-huracan">
+       <div class="resultado1-box">${p.Resultado1}</div>
+<div class="resultado2-box">${p.Resultado2}</div>
+        <img class="escudo-rival" src="${getEscudo(p.Club)}" alt="${p.Club}" />
+        <div><b>${p.Torneo}</b>
+        <div><b>Estadio:</b> ${p.Estadio}
+         - 
+        <b>Árbitro:</b> ${p.Árbitro}</div>
+        <div><b>Huracán:</b> ${p.Huracán}</div>
+        <div><b>${p.Club}:</b> ${p.Rival}</div>
+        <div><b>Goles:</b> ${p.Goles}</div>
+        <div><b>Expulsiones:</b> ${p.Expulsiones}</div>
+        <div><b>Observaciones:</b> ${p.Observaciones}</div>
+      </div>
+    </div>
+  </div>`;
+          });
         } else {
           contenedor.innerHTML = "<i>No hay partidos registrados</i>";
         }
@@ -377,7 +351,7 @@ document.addEventListener("click", function(e) {
   if (e.target.classList.contains("acordeon-header")) {
     const body = e.target.nextElementSibling;
     body.classList.toggle("cerrado");
-    e.target.classList.toggle("abierto"); // 🔹 esto hace girar la flechita
+    e.target.classList.toggle("abierto"); // 🔹 esto hace girar la flechita  }
  }
 });
 
