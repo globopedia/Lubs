@@ -163,9 +163,7 @@
           Huracán:      (p.Huracán       ?? "").trim(),
           Estadio:      (p.Estadio       ?? "").trim(),
           Árbitro:      (p.Árbitro       ?? "").trim(),
-          Goles:        (p.Goles         ?? "").trim(),
-          Expulsiones:  (p.Expulsiones   ?? "").trim(),
-          Observaciones:(p.Observaciones ?? "").trim()
+          Incidencias:  (p.Incidenias    ?? "").trim()
         }));
 
         llenarSelectClubes();
@@ -312,9 +310,7 @@
                   <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
                   <div><b>${p.Club}:</b> ${p.Rival}</div>
                   <div><b>Huracán:</b> ${p.Huracán}</div>
-                  <div><b>Goles:</b> ${p.Goles}</div>
-                  <div><b>Expulsiones:</b> ${p.Expulsiones}</div>
-                  <div><b>Observaciones:</b> ${p.Observaciones}</div>
+                  <div><b>Incidencias:</b> ${p.Incidencias}</div>
                 </div>`;
             } else {
               // Huracán local o neutral → Huracán primero
@@ -329,9 +325,7 @@
                   <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
                   <div><b>Huracán:</b> ${p.Huracán}</div>
                   <div><b>${p.Club}:</b> ${p.Rival}</div>
-                  <div><b>Goles:</b> ${p.Goles}</div>
-                  <div><b>Expulsiones:</b> ${p.Expulsiones}</div>
-                  <div><b>Observaciones:</b> ${p.Observaciones}</div>
+                  <div><b>Incidencias:</b> ${p.Incidencias}</div>
                 </div>`;
             }
 
