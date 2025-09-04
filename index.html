@@ -310,7 +310,7 @@
                   <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
                   <div><b>${p.Club}:</b> ${p.Rival}</div>
                   <div><b>Huracán:</b> ${p.Huracán}</div>
-                  <div><b>Incidencias:</b> ${p.Incidencias}</div>
+                  <div><b>Incidencias:</b> ${renderIncidencias(p.Incidencias)}</div>
                 </div>`;
             } else {
               // Huracán local o neutral → Huracán primero
@@ -359,6 +359,14 @@
       const c = clubes.find(cl => norm(cl.club) === norm(nombreClub));
       return c ? c.escudo : "";
     }
+ 
+    function renderIncidencias(texto) {
+  if (!texto) return "";
+  return texto
+    .replace(/GOL/g, "<img src='https://cdn-icons-png.flaticon.com/512/940/940631.png' alt='gol' style='width:20px;height:20px;'>")
+    .replace(/EXP/g, "<img src='https://cdn-icons-png.flaticon.com/512/2549/2549910.png' alt='expulsión' style='width:20px;height:20px;'>")
+    .replace(/PEN/g, "<img src='https://cdn-icons-png.flaticon.com/512/809/809957.png' alt='penal' style='width:20px;height:20px;'>");
+}
   </script>
 </body>
 </html>
