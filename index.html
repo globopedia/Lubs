@@ -752,10 +752,14 @@
     .replace(/ATA/g, "<img src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJNYlHFyy2T-sMTvzcvQ9pzjVfnoX7Sg9S1S_AqFsKA7CNT1-k7u8kscnMb-ZM3CWWZtUhoXBGpLd8lu8cid_7wOOrc9PNMVAJnEgGH3bubSg6Y5lcx9iHQyeLry0EBs1ddkdi-D9-xQNKKtOctbKw1QiIYUgdXuywRquUpaInIufk-VY3qQGzJknc55XW/s320/GolH.png' alt='gol' style='width:20px;height:20px;'>")
     .replace(/PEN/g, "<img src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEho-erXGKkNZ7MaZWOtZw-ru0AnJwAlzHqnl5fKLmUAn_QtAMAbXgGMsqh21htJ2XSePyqAMAq4Xce1RkwkrqrA4Hw312mYcXhXMVW-m64vRS_lKTNgnBNvCzPZsPV3eEk_QclWiNZ9n9pvAQSiscTyp94vbN_h6aMeQ_nwTdBSdXGn5B3HW3A-sj_4Bw1j/s320/Penales.png' alt='penal' style='width:20px;height:20px;'>");
 }
- function getEstadioImage(estadio) {
+function getEstadioImage(estadio) {
   if (!estadio) return "";
-  // Armamos la URL escapando espacios y tildes
-  const fileName = encodeURIComponent(estadio) + ".png";
+  // Creamos un nombre "limpio" para el archivo
+  const fileName = estadio
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // quita tildes
+    .replace(/\./g, "")                              // saca puntos
+    .replace(/\s+/g, "")                             // saca espacios
+    + ".png";
   return `https://globopedia.github.io/buscador-partidos/Estadios/${fileName}`;
 }
   </script>
