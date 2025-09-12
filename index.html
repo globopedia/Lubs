@@ -125,13 +125,13 @@
       if (t.includes("superliga")) return "Copa Superliga";
       if (t.includes("maradona")) return "Copa Maradona";
       if (t.includes("supercopa")) return "Supercopa";
-      if (t.includes("nacional b") || t.includes("b nacional") || t.includes("nac b")) return "Nacional B";
+      if (t.includes("b nacional") || t.includes("nacional b") || t.includes("nac b")) return "Nacional B";
       if (t.includes("campeonato") || t.includes("liga") || t.includes("torneo") || t.includes("primera")) return "Campeonato";
-      if (t.includes("amistos")) return "Amistoso";
+      if (t.includes("amistoso")) return "Amistoso";
       return "Otros";
     }
 
-    const ORDEN_COMPETENCIAS = ["Copa Libertadores","Copa Sudamericana","Campeonato","Copa Argentina","Copa Superliga","Copa Maradona","Supercopa","Nacional B","Amistoso","Otros"];
+    const ORDEN_COMPETENCIAS = ["Copa Libertadores","Copa Sudamericana","Campeonato","Copa Argentina","Copa Superliga","Copa Maradona","Supercopa","B Nacional","Amistoso","Otros"];
     const CONDICIONES = ["Local","Neutral","Visitante"];
     const SITUACIONES = ["Victoria","Empate","Derrota"];
 
@@ -420,24 +420,24 @@ function getEstadioImage(estadio) {
     "Campeonato 16-17",
     "Copa Argentina 2017",
     "Sudamericana 2017",
-    "Superliga 2017-18",
+    "SAF 2017-18",
+    "SAF 2018-19",
+    "SAF 2019-20",
     "Copa Argentina 2018",
-    "Superliga 2018-19",
     "Copa Argentina 2019",
     "Libertadores 2019",
-    "Superliga 2019-20",
     "Copa Argentina 2020",
     "Sudamericana 2020",
-    "Liga 2021",
-    "Liga 2022",
+    "LPF 2021",
+    "LPF 2022",
+    "LPF 2023",
+    "LPF 2024",
+    "LPF 2025",
     "Copa Argentina 2022",
-    "Liga 2023",
     "Copa Argentina 2023",
     "Libertadores 2023",
     "Sudamericana 2023",
-    "Liga 2024",
     "Copa Argentina 2024",
-    "Liga 2025",
     "Copa Argentina 2025",
     "Sudamericana 2025"
   ];
