@@ -307,6 +307,7 @@
                   <img src="https://globopedia.github.io/buscador-partidos/escudos/Huracán.png" 
                        alt="Huracán" class="escudo-huracan">
                   <div><b>${p.Torneo}</b></div>
+                  ${getTorneoImage(p.Torneo)}
                   <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
                   <div><b>${p.Club}:</b> ${p.Rival}</div>
                   <div><b>Huracán:</b> ${p.Huracán}</div>
@@ -384,6 +385,72 @@ function getEstadioImage(estadio) {
     .replace(/\s+/g, "")                             // saca espacios
     + ".png";
   return `https://globopedia.github.io/buscador-partidos/Estadios/${fileName}`;
+}
+    function getTorneoImage(nombreTorneo) {
+  if (!nombreTorneo) return "";
+
+  // Normalizamos el texto
+  const texto = nombreTorneo.toLowerCase();
+
+  // Lista de torneos que tienen logo en tu carpeta
+  const torneosDisponibles = [
+    "Apertura 2007",
+    "Clausura 2008",
+    "Apertura 2008",
+    "Clausura 2009",
+    "Apertura 2009",
+    "Clausura 2010",
+    "Apertura 2010",
+    "Clausura 2011",
+    "Nacional B 11-12",
+    "Copa Argentina 2012",
+    "Nacional B 12-13",
+    "Copa Argentina 2013",
+    "Nacional B 13-14",
+    "Copa Argentina 2014",
+    "Nacional B 2014",
+    "Campeonato 2015",
+    "Libertadores 2015",
+    "Sudamericana 2015",
+    "Supercopa 2015",
+    "Copa Argentina 2015",
+    "Campeonato 2016",
+    "Copa Argentina 2016",
+    "Libertadores 2016",
+    "Campeonato 16-17",
+    "Copa Argentina 2017",
+    "Sudamericana 2017",
+    "Superliga 17-18",
+    "Copa Argentina 2018",
+    "Superliga 18-19",
+    "Copa Argentina 2019",
+    "Libertadores 2019",
+    "Superliga 19-20",
+    "Copa Argentina 2020",
+    "Sudamericana 2020",
+    "Liga 2021",
+    "Liga 2022",
+    "Copa Argentina 2022",
+    "Liga 2023",
+    "Copa Argentina 2023",
+    "Libertadores 2023",
+    "Sudamericana 2023",
+    "Liga 2024",
+    "Copa Argentina 2024",
+    "Liga 2025",
+    "Copa Argentina 2025",
+    "Sudamericana 2025",
+  ];
+
+  for (const t of torneosDisponibles) {
+    if (texto.includes(t.toLowerCase())) {
+      const fileName = encodeURIComponent(t) + ".png";
+      return `<img src="https://globopedia.github.io/buscador-partidos/Torneos/${fileName}" 
+                   alt="${t}" style="max-height:40px; display:block; margin:4px auto;">`;
+    }
+  }
+
+  return ""; // si no encuentra coincidencia, no muestra nada
 }
  </script>
 </body>
