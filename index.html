@@ -92,19 +92,21 @@
         curiosidades: c.Curiosidades ?? c.curiosidades ?? "",
         escudo: c.Escudo ?? c.escudo ?? ""
       }));
-
+Fecha,Técnico,Condición,Situación,Resultado1,Resultado2,Club,Torneo,Estadio,Árbitro,Huracán,Rival,Incidencias
+      
       encuentros = Papa.parse(csvPartidos, { header:true, skipEmptyLines:true }).data.map(p => ({
-        Club: (p.Club ?? "").trim(),
-        Torneo: (p.Torneo ?? "").trim(),
+        Fecha: (p.Fecha ?? "").trim(),
+        Técnico: (p.Técnico ?? "").trim(),
         Condición: (p.Condición ?? "").trim(),
         Situación: (p.Situación ?? "").trim(),
-        Fecha: (p.Fecha ?? "").trim(),
         Resultado1: (p.Resultado1 ?? "").trim(),
         Resultado2: (p.Resultado2 ?? "").trim(),
-        Rival: (p.Rival ?? "").trim(),
-        Huracán: (p.Huracán ?? "").trim(),
+        Club: (p.Club ?? "").trim(),
+        Torneo: (p.Torneo ?? "").trim(),
         Estadio: (p.Estadio ?? "").trim(),
         Árbitro: (p.Árbitro ?? "").trim(),
+        Huracán: (p.Huracán ?? "").trim(),
+        Rival: (p.Rival ?? "").trim(),
         Incidencias: (p.Incidencias ?? "").trim()
       }));
 
