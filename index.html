@@ -92,7 +92,6 @@
         curiosidades: c.Curiosidades ?? c.curiosidades ?? "",
         escudo: c.Escudo ?? c.escudo ?? ""
       }));
-Fecha,Técnico,Condición,Situación,Resultado1,Resultado2,Club,Torneo,Estadio,Árbitro,Huracán,Rival,Incidencias
       
       encuentros = Papa.parse(csvPartidos, { header:true, skipEmptyLines:true }).data.map(p => ({
         Fecha: (p.Fecha ?? "").trim(),
