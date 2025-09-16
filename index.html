@@ -301,29 +301,23 @@
               // Huracán visitante → Rival primero
               bloqueHTML = `
                 <div class="partido-card">
+                  ${getTorneoImage(p.Torneo)}
                   <img class="escudo-rival" src="${getEscudo(p.Club)}" alt="${p.Club}" />
                   <div class="resultado2-box">${p.Resultado2}</div>
                   <div class="resultado1-box">${p.Resultado1}</div>
                   <img src="https://globopedia.github.io/buscador-partidos/escudos/Huracán.png" 
                        alt="Huracán" class="escudo-huracan">
                   <div><b>${p.Torneo}</b></div>
-                  ${getTorneoImage(p.Torneo)}
                   <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
                   <div><b>${p.Club}:</b> ${p.Rival}</div>
                   <div><b>Huracán:</b> ${p.Huracán}</div>
-                 <div>
-  ${
-    p.Estadio && getEstadioImage(p.Estadio)
-      ? `<img src="${getEstadioImage(p.Estadio)}" alt="${p.Estadio}" style="max-height:40px;">`
-      : "<b>Incidencias:</b>"
-  }
-  ${renderIncidencias(p.Incidencias)}
-</div>
-                </div>`;
+                 <div><b>Incidencias:</b> ${renderIncidencias(p.Incidencias)}</div>
+                 </div>`;
             } else {
               // Huracán local o neutral → Huracán primero
               bloqueHTML = `
                 <div class="partido-card">
+                  ${getTorneoImage(p.Torneo)}
                   <img src="https://globopedia.github.io/buscador-partidos/escudos/Huracán.png" 
                        alt="Huracán" class="escudo-huracan">
                   <div class="resultado1-box">${p.Resultado1}</div>
@@ -333,7 +327,7 @@
                   <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
                   <div><b>Huracán:</b> ${p.Huracán}</div>
                   <div><b>${p.Club}:</b> ${p.Rival}</div>
-                  <div><b>Incidencias:</b> ${p.Incidencias}</div>
+                  <div><b>Incidencias:</b> ${renderIncidencias(p.Incidencias)}</div>
                 </div>`;
             }
 
