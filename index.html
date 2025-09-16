@@ -312,7 +312,15 @@
       <div><b>${p.Club}:</b> ${p.Rival}</div>
       <div><b>Huracán:</b> ${p.Huracán}</div>
       <div><b>Incidencias:</b> ${renderIncidencias(p.Incidencias)}</div>
-    </div>`;
+      <div>
+  ${
+    p.Estadio && getEstadioImage(p.Estadio)
+      ? `<img src="${getEstadioImage(p.Estadio)}" alt="${p.Estadio}" style="max-height:40px;">`
+      : "<b>Incidencias:</b>"
+  }
+  ${renderIncidencias(p.Incidencias)}
+</div>
+</div>`;
 } else {
   // Huracán local o neutral → Huracán primero
   bloqueHTML = `
