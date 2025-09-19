@@ -355,6 +355,13 @@
       return "";
     }
 
+    function ajustarAltura() {
+    parent.postMessage({ altura: document.body.scrollHeight }, "*");
+  }
+
+  window.addEventListener("load", ajustarAltura);
+  window.addEventListener("resize", ajustarAltura);
+
   </script>
 </body>
 </html>
