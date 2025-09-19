@@ -237,7 +237,14 @@
                   <img src="https://globopedia.github.io/buscador-partidos/escudos/Huracán.png" alt="Huracán" class="escudo-huracan">
                   <div><b>${p.Torneo}</b></div>
                   <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
-                  <div><b>${p.Club}:</b> ${p.Rival}</div>
+                  <div>
+  ${
+    p.Estadio && getEstadioImage(p.Estadio)
+      ? `<img src="${getEstadioImage(p.Estadio)}" alt="${p.Estadio}" style="max-height:40px; display:block; margin:4px auto;">`
+      : ""
+  }
+</div>
+<div><b>${p.Club}:</b> ${p.Rival}</div>
                   <div><b>Huracán:</b> ${p.Huracán}</div>
                   <div>
                     ${ p.Estadio && getEstadioImage(p.Estadio)
@@ -257,7 +264,14 @@
                   <img class="escudo-rival" src="${getEscudo(p.Club)}" alt="${p.Club}" />
                   <div><b>${p.Torneo}</b></div>
                   <div><b>Estadio:</b> ${p.Estadio} - <b>Árbitro:</b> ${p.Árbitro}</div>
-                  <div><b>Huracán:</b> ${p.Huracán}</div>
+                  <div>
+  ${
+    p.Estadio && getEstadioImage(p.Estadio)
+      ? `<img src="${getEstadioImage(p.Estadio)}" alt="${p.Estadio}" style="max-height:40px; display:block; margin:4px auto;">`
+      : ""
+  }
+</div>
+<div><b>Huracán:</b> ${p.Huracán}</div>
                   <div><b>${p.Club}:</b> ${p.Rival}</div>
                     ${ p.Estadio && getEstadioImage(p.Estadio)
                       ? `<img src="${getEstadioImage(p.Estadio)}" alt="${p.Estadio}" style="max-height:40px;">`
