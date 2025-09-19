@@ -355,13 +355,33 @@
       return "";
     }
 
-    function ajustarAltura() {
-    parent.postMessage({ altura: document.body.scrollHeight }, "*");
+  // Envía la altura al padre
+  function postAltura() {
+    const altura = document.documentElement.scrollHeight || document.body.scrollHeight;
+    parent.postMessage({ type: 'ajustarAltura', altura: altura }, '*');
   }
 
-  window.addEventListener("load", ajustarAltura);
-  window.addEventListener("resize", ajustarAltura);
+  // Envío inicial y en resize
+  window.addEventListener('load', postAltura);
+  window.addEventListener('resize', postAltura);
 
+  // Detecta cambios dinámicos en el DOM (ej. menus, contenido que aparece)
+  const mo = new MutationObserver(() => {
+    postAltura();
+  });
+  mo.observe(document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+
+  // Asegura recalcular cuando cargan imágenes
+  document.querySelectorAll('img').forEach(img => {
+    if (!img.complete) img.addEventListener('load', postAltura);
+  });
+
+  // Opcional: reenvío periódico corto como fallback
+  let contador = 0;
+  const fallback = setInterval(() => {
+    postAltura();
+    if (++contador > 10) clearInterval(fallback); // 10 envíos y corta
+  }, 500);
   </script>
 </body>
 </html>
