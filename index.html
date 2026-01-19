@@ -47,7 +47,8 @@
 
   <script>
  const clubesURL = "https://globopedia.github.io/Lubs/clubes.csv?v=" + Date.now();
-    const partidosURL = "https://globopedia.github.io/Artids/Encuentros_Huracan.csv?v=" + Date.now();
+    const partidosURL = "https://globopedia.github.io/Artids/Artids2000.csv?v=" + Date.now();
+    const partidosURL2 = "https://globopedia.github.io/Artids/Encuentros_Huracan.csv?v=" + Date.now();
     let clubes = [];
     let encuentros = [];
 
@@ -74,11 +75,12 @@
     const SITUACIONES = ["Victoria","Empate","Derrota"];
 
     // Cargar ambos CSVs (clubes y encuentros)
-    Promise.all([
-      fetch(clubesURL).then(r => { if(!r.ok) throw new Error("Clubes CSV no disponible"); return r.text(); }),
-      fetch(partidosURL).then(r => { if(!r.ok) throw new Error("Partidos CSV no disponible"); return r.text(); })
-    ])
-    .then(([csvClubes, csvPartidos]) => {
+  Promise.all([
+  fetch(clubesURL).then(r => { if(!r.ok) throw new Error("Clubes CSV no disponible"); return r.text(); }),
+  fetch(partidosURL).then(r => { if(!r.ok) throw new Error("Partidos CSV 1 no disponible"); return r.text(); }),
+  fetch(partidosURL2).then(r => { if(!r.ok) throw new Error("Partidos CSV 2 no disponible"); return r.text(); })
+])
+.then(([csvClubes, csvPartidos1, csvPartidos2]) => {
       clubes = Papa.parse(csvClubes, { header:true, skipEmptyLines:true }).data.map(c => ({
         id: (c.id ?? "").toString().trim(),
         club: (c.Club ?? c.club ?? "").toString().trim(),
@@ -93,7 +95,10 @@
         escudo: c.Escudo ?? c.escudo ?? ""
       }));
       
-      encuentros = Papa.parse(csvPartidos, { header:true, skipEmptyLines:true }).data.map(p => ({
+      const partidos1 = Papa.parse(csvPartidos1, { header:true, skipEmptyLines:true }).data;
+const partidos2 = Papa.parse(csvPartidos2, { header:true, skipEmptyLines:true }).data;
+
+encuentros = [...partidos1, ...partidos2].map(p => ({
         Fecha: (p.Fecha ?? "").trim(),
         Técnico: (p.Técnico ?? "").trim(),
         Condición: (p.Condición ?? "").trim(),
