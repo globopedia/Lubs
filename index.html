@@ -60,12 +60,13 @@
       const t = norm(torneo);
       if (t.includes("libertadores")) return "Copa Libertadores";
       if (t.includes("sudamericana")) return "Copa Sudamericana";
+      if (t.includes("conmebol")) return "Copa Conmebol";
       if (t.includes("argentina")) return "Copa Argentina";
       if (t.includes("superliga")) return "Copa Superliga";
       if (t.includes("maradona")) return "Copa Maradona";
       if (t.includes("supercopa")) return "Supercopa";
-      if (t.includes("b nacional") || t.includes("nacional b") || t.includes("BN")) return "Nacional B";
-      if (t.includes("campeonato") || t.includes("promocion") || t.includes("torneo") || t.includes("primera")) return "Primera División";
+      if (t.includes("b nacional") || t.includes("nacional b") || t.includes("bn") || t.includes("nb")) return "1° Nacional";
+      if (t.includes("campeonato") || t.includes("promocion") || t.includes("torneo") || t.includes("primera")) return "1° División";
       if (t.includes("amistoso")) return "Amistoso";
       return "Otros";
     }
