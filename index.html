@@ -71,7 +71,7 @@
       return "Otros";
     }
 
-    const ORDEN_COMPETENCIAS = ["Copa Libertadores","Copa Sudamericana","Copa Conmebol","1° División","Copa Argentina","Copa Superliga","Copa Maradona","Supercopa","1° Nacional","Amistoso"];
+    const ORDEN_COMPETENCIAS = ["Copa Libertadores","Copa Sudamericana","Copa Conmebol","1° División","Copa Argentina","Copa Superliga","Copa Maradona","Supercopa","1° Nacional","Amistosos"];
     const CONDICIONES = ["Local","Neutral","Visitante"];
     const SITUACIONES = ["Victoria","Empate","Derrota"];
 
@@ -158,7 +158,7 @@ encuentros = [...partidos1, ...partidos2].map(p => ({
         <p><b>Estadio:</b> ${club.estadio}</p>
         <p><b>Curiosidades:</b> ${club.curiosidades}</p>
         <div class="stats">
-          <h3 style="color:#FF0000;">📊 Historial desde 1999</h3>
+          <h3 style="color:#FF0000;">📊 Historial desde 1986</h3>
           ${renderEstadisticas(club.club)}
         </div>
       `;
