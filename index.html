@@ -53,10 +53,25 @@
     let clubes = [];
     let encuentros = [];
 
-    // Normalizaciones y utilidades
-    const norm = (t) => (t || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
-    const cap = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
+   // Normalizaciones y utilidades
+const norm = (t) => (t || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+const cap = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
 
+function plural(n, singular, plural) {
+  return n === 1 ? singular : plural;
+}
+
+function capitalizarPrimera(frase) {
+  if (!frase) return "";
+  return frase.charAt(0).toUpperCase() + frase.slice(1);
+}
+function conjY(palabra) {
+  const p = palabra.toLowerCase().trim();
+  if (p.startsWith("i") || p.startsWith("hi")) {
+    return "e";
+  }
+  return "y";
+}
     function bucketCompetencia(torneo) {
       const t = norm(torneo);
       if (t.includes("libertadores")) return "Copa Libertadores";
@@ -184,6 +199,70 @@ encuentros = [...partidos1, ...partidos2, ...partidos3].map(p => ({
       let html = "";
       for (const comp of ORDEN_COMPETENCIAS) {
         if (!agg[comp]) continue;
+// Partidos reales de esta competencia
+const partidosComp = delClub.filter(p =>
+  bucketCompetencia(p.Torneo) === comp
+);
+
+// A
+const A = partidosComp.length;
+
+// B, C, E
+let B = 0, C = 0, E = 0;
+
+for (const cond of CONDICIONES) {
+  const bucket = agg[comp][cond] || { Victoria:0, Empate:0, Derrota:0 };
+  B += bucket.Victoria;
+  C += bucket.Empate;
+  E += bucket.Derrota;
+}
+
+// F y G
+let F = 0, G = 0;
+partidosComp.forEach(p => {
+  F += parseInt(p.Resultado1) || 0;
+  G += parseInt(p.Resultado2) || 0;
+});
+
+// Frase resumen
+let partesResultados = [];
+
+if (B > 0) partesResultados.push(`Huracán ganó ${B}`);
+if (C > 0) partesResultados.push(`empataron ${C}`);
+if (E > 0) partesResultados.push(`${nombreClub} venció en ${E}`);
+
+let fraseResultados = "";
+if (partesResultados.length === 1) {
+  fraseResultados = partesResultados[0] + ".";
+} else if (partesResultados.length === 2) {
+ const conj = conjY(nombreClub);
+fraseResultados = partesResultados[0] + " " + conj + " " + partesResultados[1] + ".";
+} else if (partesResultados.length === 3) {
+const conj = conjY(nombreClub);
+fraseResultados = partesResultados[0] + ", " + partesResultados[1] + " " + conj + " " + partesResultados[2] + ".";
+}
+
+fraseResultados = capitalizarPrimera(fraseResultados);
+let partesGoles = [];
+
+if (F > 0) partesGoles.push(`El Globito anotó ${F} ${plural(F, "gol", "goles")}`);
+if (G > 0) partesGoles.push(`${nombreClub} marcó ${G}`);
+
+let fraseGoles = "";
+if (partesGoles.length === 1) {
+  fraseGoles = partesGoles[0] + ".";
+} else if (partesGoles.length === 2) {
+  const conj = conjY(nombreClub);
+  fraseGoles = partesGoles[0] + " " + conj + " " + partesGoles[1] + ".";
+}
+
+const resumenHTML = `
+  <p style="margin:6px 0; font-weight:500;">
+    Jugaron ${A} ${plural(A, "partido", "partidos")}.
+    ${fraseResultados} 
+    ${fraseGoles}
+  </p>
+`;
         let compHTML = "";
         CONDICIONES.forEach((cond, idx) => {
           const bucket = agg[comp][cond] || { Victoria:0, Empate:0, Derrota:0 };
@@ -210,12 +289,13 @@ encuentros = [...partidos1, ...partidos2, ...partidos3].map(p => ({
           if (idx < CONDICIONES.length - 1) compHTML += `<div class="hr"></div>`;
         });
         if (compHTML) {
-          html += `
-            <div class="stat-group">
-              <div class="stat-title">🏆 ${comp}</div>
-              ${compHTML}
-            </div>
-          `;
+html += `
+  <div class="stat-group">
+    <div class="stat-title">🏆 ${comp}</div>
+    ${resumenHTML}
+    ${compHTML}
+  </div>
+`;
         }
       }
       return html || "<p>Sin datos disponibles</p>";
