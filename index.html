@@ -34,22 +34,53 @@
     }
     .escudo-huracan, .escudo-rival { width: 50px; height: 50px; object-fit: contain; position: relative; top: 6px; vertical-align: middle; }
     .resultado-con-escudo { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+.autocomplete-item {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px;
+  cursor:pointer;
+}
+
+.autocomplete-item:hover {
+  background:#ffdddd;
+}
+.autocomplete-item.activo {
+  background:#ffdddd;
+}
   </style>
 </head>
 <body>
   <img src="https://globopedia.github.io/Artids/logo_globopedia.png" alt="Logo Huracán" class="logo" />
   <h1>📜 Historiales</h1>
-  <div style="text-align:center;">
-    <label>Seleccionar club: </label>
-    <select id="clubSelect"></select>
-  </div>
+  <div style="text-align:center; position:relative;">
+  <label for="clubSearch">Seleccionar club: </label><br>
+
+  <input type="text" id="clubSearch"
+    placeholder="Buscá el club..."
+    autocomplete="off"
+    style="padding:8px;border-radius:8px;border:2px solid #FF0000;
+    font-size:16px;margin-top:8px;">
+
+  <!-- mantenemos el select original pero oculto -->
+  <select id="clubSelect" style="display:none;"></select>
+
+  <ul id="clubAutocompleteList"
+    style="position:absolute;left:50%;transform:translateX(-50%);
+    background:white;border:1px solid #ccc;border-radius:8px;
+    width:300px;max-height:220px;overflow:auto;
+    list-style:none;padding:0;margin-top:2px;z-index:1000;">
+  </ul>
+</div>
   <div id="clubInfo" class="club-card" style="display:none;"></div>
 
   <script>
  const clubesURL = "https://globopedia.github.io/Lubs/clubes.csv?v=" + Date.now();
-    const partidosURL = "https://globopedia.github.io/Artids/Artids1985.csv?v=" + Date.now();
-    const partidosURL2 = "https://globopedia.github.io/Artids/Artids2000.csv?v=" + Date.now();
-    const partidosURL3 = "https://globopedia.github.io/Artids/Artids2015.csv?v=" + Date.now();
+    const partidosURL = "https://globopedia.github.io/Artids/Artids1970.csv?v=" + Date.now();
+    const partidosURL2 = "https://globopedia.github.io/Artids/Artids1985.csv?v=" + Date.now();
+    const partidosURL3 = "https://globopedia.github.io/Artids/Artids2000.csv?v=" + Date.now();
+    const partidosURL4 = "https://globopedia.github.io/Artids/Artids2015.csv?v=" + Date.now();
     let clubes = [];
     let encuentros = [];
 
@@ -74,15 +105,15 @@ function conjY(palabra) {
 }
     function bucketCompetencia(torneo) {
       const t = norm(torneo);
-      if (t.includes("libertadores")) return "Copa Libertadores";
+      if (t.includes("copa libertadores")) return "Copa Libertadores";
       if (t.includes("sudamericana")) return "Copa Sudamericana";
       if (t.includes("conmebol")) return "Copa Conmebol";
       if (t.includes("argentina")) return "Copa Argentina";
       if (t.includes("superliga")) return "Copa Superliga";
       if (t.includes("maradona")) return "Copa Maradona";
       if (t.includes("supercopa")) return "Supercopa";
-      if (t.includes("b nacional") || t.includes("nacional b") || t.includes("octogonal") || t.includes("bn") || t.includes("nb")) return "2° Categoría";
-      if (t.includes("campeonato") || t.includes("promocion") || t.includes("torneo") || t.includes("primera")) return "1° División";
+      if (t.includes("b nacional") || t.includes("nacional b") || t.includes("reducido") || t.includes("bn") || t.includes("nb")) return "2° Categoría";
+      if (t.includes("campeonato") || t.includes("promocion") || t.includes("torneo") || t.includes("primera") || t.includes("pre-libertadores")) return "1° División";
       if (t.includes("amistoso")) return "Amistosos";
       return "Otros"
     }
@@ -91,15 +122,20 @@ function conjY(palabra) {
     const CONDICIONES = ["Local","Neutral","Visitante"];
     const SITUACIONES = ["Victoria","Empate","Derrota"];
 
-    // Cargar ambos CSVs (clubes y encuentros)
+let selectedIndex = -1;
+let debounceTimer;
+
+    // Cargar todos los CSVs (clubes y encuentros)
   Promise.all([
   fetch(clubesURL).then(r => { if(!r.ok) throw new Error("Clubes CSV no disponible"); return r.text(); }),
   fetch(partidosURL).then(r => { if(!r.ok) throw new Error("Partidos CSV 1 no disponible"); return r.text(); }),
   fetch(partidosURL2).then(r => { if(!r.ok) throw new Error("Partidos CSV 2 no disponible"); return r.text(); }),
-  fetch(partidosURL3).then(r => { if(!r.ok) throw new Error("Partidos CSV 3 no disponible"); return r.text(); })
+  fetch(partidosURL3).then(r => { if(!r.ok) throw new Error("Partidos CSV 3 no disponible"); return r.text(); }),
+  fetch(partidosURL4).then(r => { if(!r.ok) throw new Error("Partidos CSV 4 no disponible"); return r.text(); })
 ])
-.then(([csvClubes, csvPartidos1, csvPartidos2, csvPartidos3]) => {
-      clubes = Papa.parse(csvClubes, { header:true, skipEmptyLines:true }).data.map(c => ({
+
+.then(([csvClubes, csvPartidos1, csvPartidos2, csvPartidos3, csvPartidos4]) => {
+        clubes = Papa.parse(csvClubes, { header:true, skipEmptyLines:true }).data.map(c => ({
         id: (c.id ?? "").toString().trim(),
         club: (c.Club ?? c.club ?? "").toString().trim(),
         nombre: c.Nombre ?? c.nombre ?? "",
@@ -116,8 +152,9 @@ function conjY(palabra) {
       const partidos1 = Papa.parse(csvPartidos1, { header:true, skipEmptyLines:true }).data;
       const partidos2 = Papa.parse(csvPartidos2, { header:true, skipEmptyLines:true }).data;
       const partidos3 = Papa.parse(csvPartidos3, { header:true, skipEmptyLines:true }).data;
+      const partidos4 = Papa.parse(csvPartidos4, { header:true, skipEmptyLines:true }).data;
 
-encuentros = [...partidos1, ...partidos2, ...partidos3].map(p => ({
+encuentros = [...partidos1, ...partidos2, ...partidos3, ...partidos4].map(p => ({
         Fecha: (p.Fecha ?? "").trim(),
         Técnico: (p.Técnico ?? "").trim(),
         Condición: (p.Condición ?? "").trim(),
@@ -135,12 +172,19 @@ encuentros = [...partidos1, ...partidos2, ...partidos3].map(p => ({
       }));
 
       llenarSelectClubes();
-    })
-    .catch(err => {
+      activarBuscadorClubes();
+  })
+  .catch(err => {
       console.error("Error cargando CSVs:", err);
       alert("No pude cargar los CSV. Revisá las URLs o el formato en la consola.");
     });
 
+  const clubSearchInput = document.getElementById("clubSearch");
+
+clubSearchInput.addEventListener(
+  "input",
+  debounce(e => filtrarClubes(e.target.value), 200)
+);
     function llenarSelectClubes() {
       const sel = document.getElementById("clubSelect");
       sel.innerHTML = "<option value=''>-- Seleccionar --</option>";
@@ -154,7 +198,62 @@ encuentros = [...partidos1, ...partidos2, ...partidos3].map(p => ({
       });
       sel.addEventListener("change", mostrarClub);
     }
- function mostrarClub() {
+ 
+function activarBuscadorClubes() {
+  const clubSearchInput = document.getElementById("clubSearch");
+  const clubSuggestionsList = document.getElementById("clubAutocompleteList");
+
+  clubSearchInput.addEventListener("input", function(e) {
+    const texto = e.target.value.toLowerCase();
+    clubSuggestionsList.innerHTML = "";
+
+    if (!texto) return;
+
+    const filtrados = clubes
+      .filter(c => c.club && c.club.toLowerCase().includes(texto))
+      .slice(0, 15);
+
+    filtrados.forEach(c => {
+      const li = document.createElement("li");
+      li.style.padding = "6px";
+      li.style.cursor = "pointer";
+      li.style.display = "flex";
+      li.style.alignItems = "center";
+      li.style.gap = "8px";
+
+      li.innerHTML = `
+        <img src="${c.escudo}" style="width:22px;height:22px;object-fit:contain;">
+        <span>${c.club}</span>
+      `;
+
+      li.onclick = function() {
+        seleccionarClub(c.id);
+      };
+
+      clubSuggestionsList.appendChild(li);
+    });
+  });
+}
+
+function seleccionarClub(id) {
+  const select = document.getElementById("clubSelect");
+  const input = document.getElementById("clubSearch");
+
+  select.value = id;
+  select.dispatchEvent(new Event("change"));
+
+  input.value = clubes.find(c => c.id === id)?.club || "";
+
+  document.getElementById("clubAutocompleteList").innerHTML = "";
+
+  // 👇 magia UX
+  input.focus();
+
+  setTimeout(() => {
+    input.select();
+  }, 0);
+}
+function mostrarClub() {
       const clubId = document.getElementById("clubSelect").value;
       const club = clubes.find(c => (c.id||"").trim() === (clubId||"").trim());
       if (!club) {
@@ -176,7 +275,7 @@ encuentros = [...partidos1, ...partidos2, ...partidos3].map(p => ({
         <p><b>Estadio:</b> ${club.estadio}</p>
         <p><b>Curiosidades:</b> ${club.curiosidades}</p>
         <div class="stats">
-          <h3 style="color:#FF0000;">📊 Historial desde 1986</h3>
+          <h3 style="color:#FF0000;">📊 Historial desde 1971</h3>
           ${renderEstadisticas(club.club)}
         </div>
       `;
@@ -467,6 +566,105 @@ ${ p.Foto ? `<div style="margin:6px 0;"><img src="${p.Foto}" alt="Incidencias" s
     postAltura();
     if (++contador > 10) clearInterval(fallback); // 10 envíos y corta
   }, 500);
+
+function debounce(func, delay) {
+  return function(...args) {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+function filtrarClubes(termino) {
+  const texto = norm(termino);
+  const suggestionsList = document.getElementById("clubAutocompleteList");
+  suggestionsList.innerHTML = "";
+  selectedIndex = -1;
+
+  if (!texto) return;
+
+ const resultados = clubes
+  .filter(c => norm(c.club).includes(texto))
+  .slice(0, 15);
+
+  resultados.forEach(r => {
+    const li = document.createElement("li");
+    li.className = "autocomplete-item";
+
+    li.innerHTML = `
+      ${r.escudo
+        ? `<img src="${r.escudo}" style="width:22px;height:22px;object-fit:contain;">`
+        : `<div style="width:22px;height:22px;"></div>`}
+      <span>${r.club}</span>
+    `;
+
+    li.addEventListener("click", () => {
+      seleccionarClub(r.id);
+    });
+
+    suggestionsList.appendChild(li);
+  });
+}
+
+clubSearchInput.addEventListener("keydown", function(e) {
+  const suggestionsList = document.getElementById("clubAutocompleteList");
+  const items = suggestionsList.querySelectorAll("li");
+  if (!items.length) return;
+
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    selectedIndex = (selectedIndex + 1) % items.length;
+    actualizarSeleccion(items);
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+    actualizarSeleccion(items);
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    if (selectedIndex >= 0 && selectedIndex < items.length) {
+      items[selectedIndex].click();
+    }
+  } else {
+    selectedIndex = -1;
+  }
+});
+function actualizarSeleccion(items) {
+  const suggestionsList = document.getElementById("clubAutocompleteList");
+
+  items.forEach((item, i) => {
+    const activo = i === selectedIndex;
+    item.classList.toggle("activo", activo);
+  });
+
+  const selectedItem = items[selectedIndex];
+  if (selectedItem) {
+    const containerTop = suggestionsList.scrollTop;
+    const containerBottom = containerTop + suggestionsList.offsetHeight;
+    const itemTop = selectedItem.offsetTop;
+    const itemBottom = itemTop + selectedItem.offsetHeight;
+
+    if (itemTop < containerTop) {
+      suggestionsList.scrollTop = itemTop;
+    } else if (itemBottom > containerBottom) {
+      suggestionsList.scrollTop = itemBottom - suggestionsList.offsetHeight;
+    }
+  }
+}
+clubSearchInput.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    document.getElementById("clubAutocompleteList").innerHTML = "";
+    selectedIndex = -1;
+  }
+});
+document.addEventListener("click", function(e) {
+  const input = document.getElementById("clubSearch");
+  const list = document.getElementById("clubAutocompleteList");
+
+  if (!input.contains(e.target) && !list.contains(e.target)) {
+    list.innerHTML = "";
+    selectedIndex = -1;
+  }
+});
+
   </script>
 </body>
 </html>
