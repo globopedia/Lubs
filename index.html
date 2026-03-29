@@ -77,10 +77,12 @@
 
   <script>
  const clubesURL = "https://globopedia.github.io/Lubs/clubes.csv?v=" + Date.now();
-    const partidosURL = "https://globopedia.github.io/Artids/Artids1970.csv?v=" + Date.now();
-    const partidosURL2 = "https://globopedia.github.io/Artids/Artids1985.csv?v=" + Date.now();
-    const partidosURL3 = "https://globopedia.github.io/Artids/Artids2000.csv?v=" + Date.now();
-    const partidosURL4 = "https://globopedia.github.io/Artids/Artids2015.csv?v=" + Date.now();
+    const partidosURL = "https://globopedia.github.io/Artids/Artids1940.csv?v=" + Date.now();
+    const partidosURL2 = "https://globopedia.github.io/Artids/Artids1955.csv?v=" + Date.now();
+    const partidosURL3 = "https://globopedia.github.io/Artids/Artids1970.csv?v=" + Date.now();
+    const partidosURL4 = "https://globopedia.github.io/Artids/Artids1985.csv?v=" + Date.now();
+    const partidosURL5 = "https://globopedia.github.io/Artids/Artids2000.csv?v=" + Date.now();
+    const partidosURL6 = "https://globopedia.github.io/Artids/Artids2015.csv?v=" + Date.now();
     let clubes = [];
     let encuentros = [];
 
@@ -133,10 +135,12 @@ let debounceTimer;
   fetch(partidosURL).then(r => { if(!r.ok) throw new Error("Partidos CSV 1 no disponible"); return r.text(); }),
   fetch(partidosURL2).then(r => { if(!r.ok) throw new Error("Partidos CSV 2 no disponible"); return r.text(); }),
   fetch(partidosURL3).then(r => { if(!r.ok) throw new Error("Partidos CSV 3 no disponible"); return r.text(); }),
-  fetch(partidosURL4).then(r => { if(!r.ok) throw new Error("Partidos CSV 4 no disponible"); return r.text(); })
+  fetch(partidosURL4).then(r => { if(!r.ok) throw new Error("Partidos CSV 4 no disponible"); return r.text(); }),
+  fetch(partidosURL5).then(r => { if(!r.ok) throw new Error("Partidos CSV 5 no disponible"); return r.text(); }),
+  fetch(partidosURL6).then(r => { if(!r.ok) throw new Error("Partidos CSV 6 no disponible"); return r.text(); })
 ])
 
-.then(([csvClubes, csvPartidos1, csvPartidos2, csvPartidos3, csvPartidos4]) => {
+.then(([csvClubes, csvPartidos1, csvPartidos2, csvPartidos3, csvPartidos4, csvPartidos5, csvPartidos6]) => {
         clubes = Papa.parse(csvClubes, { header:true, skipEmptyLines:true }).data.map(c => ({
         id: (c.id ?? "").toString().trim(),
         club: (c.Club ?? c.club ?? "").toString().trim(),
@@ -155,8 +159,10 @@ let debounceTimer;
       const partidos2 = Papa.parse(csvPartidos2, { header:true, skipEmptyLines:true }).data;
       const partidos3 = Papa.parse(csvPartidos3, { header:true, skipEmptyLines:true }).data;
       const partidos4 = Papa.parse(csvPartidos4, { header:true, skipEmptyLines:true }).data;
+      const partidos5 = Papa.parse(csvPartidos5, { header:true, skipEmptyLines:true }).data;
+      const partidos6 = Papa.parse(csvPartidos6, { header:true, skipEmptyLines:true }).data;
 
-encuentros = [...partidos1, ...partidos2, ...partidos3, ...partidos4].map(p => ({
+encuentros = [...partidos1, ...partidos2, ...partidos3, ...partidos4, ...partidos5, ...partidos6].map(p => ({
         Fecha: (p.Fecha ?? "").trim(),
         Técnico: (p.Técnico ?? "").trim(),
         Condición: (p.Condición ?? "").trim(),
