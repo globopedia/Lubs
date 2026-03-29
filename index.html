@@ -110,16 +110,17 @@ function conjY(palabra) {
       if (t.includes("conmebol")) return "Copa Conmebol";
       if (t.includes("argentina")) return "Copa Argentina";
       if (t.includes("superliga")) return "Copa Superliga";
+      if (t.includes("competencia")) return "Copa Competencia";
       if (t.includes("maradona")) return "Copa Maradona 2020";
       if (t.includes("suecia")) return "Copa Suecia 1958";
       if (t.includes("supercopa")) return "Supercopa";
       if (t.includes("b nacional") || t.includes("nacional b") || t.includes("reducido") || t.includes("bn") || t.includes("nb")) return "2° Categoría";
-      if (t.includes("campeonato") || t.includes("promocion") || t.includes("torneo") || t.includes("primera") || t.includes("pre-libertadores")) return "1° División";
+      if (t.includes("campeonato") || t.includes("promocion") || t.includes("torneo") || t.includes("descenso") || t.includes("pre-libertadores")) return "1° División";
       if (t.includes("amistoso")) return "Amistosos";
       return "Otros"
     }
 
-    const ORDEN_COMPETENCIAS = ["Copa Libertadores","Copa Sudamericana","Copa Conmebol","1° División","Copa Argentina","Copa Superliga","Supercopa","Copa Maradona 2020","Copa Suecia 1958","2° Categoría","Amistosos"];
+    const ORDEN_COMPETENCIAS = ["Copa Libertadores","Copa Sudamericana","Copa Conmebol","1° División","Copa Argentina","Copa Superliga","Copa Competencia","Supercopa","Copa Maradona 2020","Copa Suecia 1958","2° Categoría","Amistosos"];
     const CONDICIONES = ["Local","Neutral","Visitante"];
     const SITUACIONES = ["Victoria","Empate","Derrota"];
 
@@ -276,7 +277,7 @@ function mostrarClub() {
         <p><b>Estadio:</b> ${club.estadio}</p>
         <p><b>Curiosidades:</b> ${club.curiosidades}</p>
         <div class="stats">
-          <h3 style="color:#FF0000;">📊 Historial desde 1958</h3>
+          <h3 style="color:#FF0000;">📊 Historial desde 1949</h3>
           ${renderEstadisticas(club.club)}
         </div>
       `;
