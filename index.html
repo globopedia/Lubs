@@ -60,7 +60,7 @@
 }
     
 #clubInfo {
-  margin-top: 30px;
+  margin-top: 30px auto;
 }
  .autocomplete-item {
   display:flex;
@@ -635,7 +635,7 @@ function filtrarClubes(termino) {
 
     li.innerHTML = `
       ${r.escudo
-        ? `<img src="${r.escudo}" style="width:22px;height:22px;object-fit:contain;">`
+        ? `<img src="${r.escudo}" class="escudo-autocomplete">`
         : `<div style="width:22px;height:22px;"></div>`}
       <span>${r.club}</span>
     `;
