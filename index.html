@@ -225,13 +225,6 @@ clubSearchInput.addEventListener(
   "input",
   debounce(e => filtrarClubes(e.target.value), 200)
 );
-clubSearchInput.addEventListener("focus", function() {
-  this.select();
-});
-
-clubSearchInput.addEventListener("click", function() {
-  this.select();
-});
     function llenarSelectClubes() {
       const sel = document.getElementById("clubSelect");
       sel.innerHTML = "<option value=''>-- Seleccionar --</option>";
